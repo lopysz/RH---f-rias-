@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+header {
+    background: #1f7a4d;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+nav {
+    background: white;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    border-bottom: 1px solid #ddd;
+}
+
+button {
+    border: none;
+    background: #1f7a4d;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #155c39;
+}
+
+main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.tela {
+    display: none;
+}
+
+.tela.ativa {
+    display: block;
+}
+
+.formulario {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+input,
+select {
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.pesquisa {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.card span {
+    display: block;
+    color: #666;
+}
+
+.card strong {
+    display: block;
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+.funcionario {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.funcionario button {
+    background: #c0392b;
+}
+
+.resultado {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.8;
+}
+
+.valor-final {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f7a4d;
+}
+
+@media (max-width: 600px) {
+
+    nav {
+        flex-wrap: wrap;
+    }
+
+    .funcionario {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
