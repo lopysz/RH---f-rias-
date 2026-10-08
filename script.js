@@ -1169,4 +1169,4 @@ function excluirFuncionario(id) {
 
     const confirmar =
         confirm(
-            "Deseja realmente excluir este funcionári
+            "Deseja realmente excluir este funcionário
