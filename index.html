@@ -1,194 +1,133 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Prancheta RH</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-<div class="app">
+    <div class="app">
 
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
 
-    <!-- =====================================================
-         MENU LATERAL
-    ====================================================== -->
-
-    <aside class="sidebar">
-
-
-        <div class="logo">
-
-            <strong>
-                PRANCHETA RH
-            </strong>
-
-            <span>
-                Sistema de Recursos Humanos
-            </span>
-
-        </div>
-
-
-        <nav class="menu">
-
-
-            <div class="menu-titulo">
-                CÁLCULOS
+            <div class="logo">
+                <strong>PRANCHETA RH</strong>
+                <span>Sistema de Recursos Humanos</span>
             </div>
 
+            <nav class="menu">
 
-            <button
-                class="menu-item ativo"
-                onclick="abrirPagina('ferias', this)"
-            >
-                Férias
-            </button>
+                <!-- CÁLCULOS -->
+                <div class="menu-titulo">CÁLCULOS</div>
 
-
-            <button
-                class="menu-item"
-                onclick="abrirPagina('consignado', this)"
-            >
-                Empréstimo consignado
-            </button>
-
-
-            <button
-                class="menu-item"
-                onclick="abrirPagina('folha', this)"
-            >
-                Folha de pagamento
-            </button>
-
-
-
-            <div class="menu-titulo espacamento">
-                MATRÍCULA
-            </div>
-
-
-            <button
-                class="menu-item"
-                onclick="abrirPagina('cadastrar', this)"
-            >
-                Cadastrar funcionário
-            </button>
-
-
-            <button
-                class="menu-item"
-                onclick="abrirPagina('funcionarios', this)"
-            >
-                Funcionários
-            </button>
-
-
-            <button
-                class="menu-item"
-                onclick="abrirPagina('planilhas', this)"
-            >
-                Planilhas de funcionários
-            </button>
-
-
-            <button
-                class="menu-item"
-                onclick="abrirPagina('planilhaConsignado', this)"
-            >
-                Planilha consignado
-            </button>
-
-
-            <button
-                class="menu-item"
-                onclick="exportarFuncionarios()"
-            >
-                Exportar funcionários
-            </button>
-
-
-        </nav>
-
-
-        <div class="versao">
-
-            Prancheta RH
-
-            <span>
-                Versão Beta
-            </span>
-
-        </div>
-
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         CONTEÚDO PRINCIPAL
-    ====================================================== -->
-
-    <main class="conteudo">
-
-
-        <header class="cabecalho">
-
-            <div>
-
-                <h1 id="tituloPagina">
+                <button
+                    class="menu-item ativo"
+                    onclick="abrirPagina('ferias', this)"
+                >
                     Férias
-                </h1>
+                </button>
+
+                <button
+                    class="menu-item"
+                    onclick="abrirPagina('consignado', this)"
+                >
+                    Empréstimo consignado
+                </button>
+
+                <button
+                    class="menu-item"
+                    onclick="abrirPagina('planilhaConsignado', this)"
+                >
+                    Planilha consignado
+                </button>
+
+                <button
+                    class="menu-item"
+                    onclick="abrirPagina('folha', this)"
+                >
+                    Folha de pagamento
+                </button>
 
 
-                <p id="subtituloPagina">
-                    Cálculo completo da remuneração de férias
-                </p>
+                <!-- MATRÍCULA -->
+                <div class="menu-titulo espacamento">MATRÍCULA</div>
 
+                <button
+                    class="menu-item"
+                    onclick="abrirPagina('cadastrar', this)"
+                >
+                    Cadastrar funcionário
+                </button>
+
+                <button
+                    class="menu-item"
+                    onclick="abrirPagina('funcionarios', this)"
+                >
+                    Funcionários
+                </button>
+
+                <button
+                    class="menu-item"
+                    onclick="abrirPagina('planilhas', this)"
+                >
+                    Planilhas de funcionários
+                </button>
+
+                <button
+                    class="menu-item"
+                    onclick="exportarFuncionarios()"
+                >
+                    Exportar funcionários
+                </button>
+
+            </nav>
+
+            <!-- RODAPÉ DO MENU -->
+            <div class="versao">
+                Prancheta RH
+                <span>Versão Beta</span>
             </div>
 
-        </header>
+        </aside>
 
 
-        <section id="areaConteudo"></section>
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="conteudo">
 
+            <header class="cabecalho">
 
-    </main>
+                <div>
+                    <h1 id="tituloPagina">Férias</h1>
 
+                    <p id="subtituloPagina">
+                        Cálculo completo da remuneração de férias
+                    </p>
+                </div>
 
-</div>
+            </header>
 
+            <!-- ÁREA ONDE O JAVASCRIPT EXIBE AS TELAS -->
+            <section id="areaConteudo"></section>
 
+        </main>
 
-<!-- =========================================================
-     SHEETJS
-     Biblioteca para leitura de XLSX, XLS, XLSM e CSV
-========================================================= -->
+    </div>
 
-<script
-    src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"
-></script>
+    <!-- BIBLIOTECA PARA IMPORTAR E EXPORTAR PLANILHAS -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
-
-<script src="script.js"></script>
-
+    <!-- SCRIPT PRINCIPAL DO SISTEMA -->
+    <script src="script.js"></script>
 
 </body>
 
 </html>
+```
