@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prancheta RH</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="topo">
+
+        <div class="marca">
+            <div class="icone-prancheta">▣</div>
+
+            <div>
+                <h1>Prancheta RH</h1>
+                <span>Recursos Humanos</span>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="principal">
+
+        <div class="boas-vindas">
+            <h2>Olá!</h2>
+            <p>O que você deseja fazer?</p>
+        </div>
+
+
+        <!-- ÁREA DOS DOIS BOTÕES -->
+        <div class="menu-principal">
+
+
+            <!-- ========================= -->
+            <!-- BOTÃO CALCULAR -->
+            <!-- ========================= -->
+
+            <div class="menu-grupo calcular-grupo">
+
+                <button
+                    class="botao-circular"
+                    onclick="abrirMenu('calcular')"
+                    aria-label="Abrir cálculos"
+                >
+
+                    <div class="icone">🧮</div>
+
+                    <span>Calcular</span>
+
+                </button>
+
+
+                <!-- LEQUE -->
+                <div
+                    id="menu-calcular"
+                    class="leque leque-calcular"
+                >
+
+                    <button
+                        class="opcao"
+                        onclick="abrirModulo('ferias')"
+                    >
+                        <span class="opcao-icone">🏖️</span>
+                        <span>Férias</span>
+                    </button>
+
+
+                    <button
+                        class="opcao"
+                        onclick="abrirModulo('consignado')"
+                    >
+                        <span class="opcao-icone">💰</span>
+                        <span>Consignado</span>
+                    </button>
+
+
+                    <button
+                        class="opcao"
+                        onclick="abrirModulo('folha')"
+                    >
+                        <span class="opcao-icone">🧾</span>
+                        <span>Folha</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ========================= -->
+            <!-- BOTÃO PESSOAS -->
+            <!-- ========================= -->
+
+            <div class="menu-grupo pessoas-grupo">
+
+                <button
+                    class="botao-circular"
+                    onclick="abrirMenu('pessoas')"
+                    aria-label="Abrir pessoas"
+                >
+
+                    <div class="icone">👤</div>
+
+                    <span>Pessoas</span>
+
+                </button>
+
+
+                <!-- LEQUE -->
+                <div
+                    id="menu-pessoas"
+                    class="leque leque-pessoas"
+                >
+
+                    <button
+                        class="opcao"
+                        onclick="abrirModulo('adicionar')"
+                    >
+                        <span class="opcao-icone">➕</span>
+                        <span>Adicionar</span>
+                    </button>
+
+
+                    <button
+                        class="opcao"
+                        onclick="abrirModulo('funcionarios')"
+                    >
+                        <span class="opcao-icone">👥</span>
+                        <span>Funcionários</span>
+                    </button>
+
+
+                    <button
+                        class="opcao"
+                        onclick="abrirModulo('planilhas')"
+                    >
+                        <span class="opcao-icone">📊</span>
+                        <span>Planilhas</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ====================================== -->
+    <!-- JANELA DOS MÓDULOS -->
+    <!-- ====================================== -->
+
+    <div
+        id="modal"
+        class="modal"
+    >
+
+        <div class="janela">
+
+            <button
+                class="fechar"
+                onclick="fecharModal()"
+            >
+                ×
+            </button>
+
+            <div id="conteudo-modal"></div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
