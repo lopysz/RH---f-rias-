@@ -1,34 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Prancheta RH</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
-    <!-- =========================
+
+    <!-- =====================================================
          MENU LATERAL
-    ========================== -->
+    ====================================================== -->
 
     <aside class="sidebar">
 
+
         <div class="logo">
-            <strong>PRANCHETA RH</strong>
-            <span>Sistema de Recursos Humanos</span>
+
+            <strong>
+                PRANCHETA RH
+            </strong>
+
+            <span>
+                Sistema de Recursos Humanos
+            </span>
+
         </div>
+
+
 
         <nav class="menu">
 
+
+            <!-- =========================
+                 CÁLCULOS
+            ========================== -->
+
             <div class="menu-titulo">
+
                 CÁLCULOS
+
             </div>
+
 
             <button
                 class="menu-item ativo"
@@ -37,12 +68,14 @@
                 Férias
             </button>
 
+
             <button
                 class="menu-item"
                 onclick="abrirPagina('consignado', this)"
             >
                 Empréstimo consignado
             </button>
+
 
             <button
                 class="menu-item"
@@ -52,9 +85,17 @@
             </button>
 
 
+
+            <!-- =========================
+                 MATRÍCULA
+            ========================== -->
+
             <div class="menu-titulo espacamento">
+
                 MATRÍCULA
+
             </div>
+
 
             <button
                 class="menu-item"
@@ -63,12 +104,14 @@
                 Cadastrar funcionário
             </button>
 
+
             <button
                 class="menu-item"
                 onclick="abrirPagina('funcionarios', this)"
             >
                 Funcionários
             </button>
+
 
             <button
                 class="menu-item"
@@ -77,7 +120,6 @@
                 Planilhas de funcionários
             </button>
 
-            <!-- NOVA OPÇÃO -->
 
             <button
                 class="menu-item"
@@ -86,6 +128,23 @@
                 Planilha consignado
             </button>
 
+
+            <button
+                class="menu-item"
+                onclick="abrirPagina('importarFuncionarios', this)"
+            >
+                Importar planilha de funcionários
+            </button>
+
+
+            <button
+                class="menu-item"
+                onclick="abrirPagina('importarConsignado', this)"
+            >
+                Importar planilha consignado
+            </button>
+
+
             <button
                 class="menu-item"
                 onclick="exportarFuncionarios()"
@@ -93,43 +152,69 @@
                 Exportar funcionários
             </button>
 
+
         </nav>
 
+
+
         <div class="versao">
+
             Prancheta RH
-            <span>Versão Beta</span>
+
+            <span>
+                Versão Beta
+            </span>
+
         </div>
+
 
     </aside>
 
 
-    <!-- =========================
+
+    <!-- =====================================================
          ÁREA PRINCIPAL
-    ========================== -->
+    ====================================================== -->
 
     <main class="conteudo">
 
+
         <header class="cabecalho">
 
+
             <div>
-                <h1 id="tituloPagina">Férias</h1>
+
+                <h1 id="tituloPagina">
+                    Férias
+                </h1>
+
 
                 <p id="subtituloPagina">
+
                     Cálculo completo da remuneração de férias
+
                 </p>
+
             </div>
+
 
         </header>
 
 
+
         <section id="areaConteudo"></section>
 
+
     </main>
+
 
 </div>
 
 
+
 <script src="script.js"></script>
 
+
 </body>
+
 </html>
