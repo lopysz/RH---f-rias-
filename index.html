@@ -13,7 +13,10 @@
 
 <div class="app">
 
-    <!-- MENU LATERAL -->
+    <!-- =========================
+         MENU LATERAL
+    ========================== -->
+
     <aside class="sidebar">
 
         <div class="logo">
@@ -23,56 +26,85 @@
 
         <nav class="menu">
 
-            <div class="menu-titulo">CÁLCULOS</div>
+            <div class="menu-titulo">
+                CÁLCULOS
+            </div>
 
-            <button class="menu-item ativo" onclick="abrirPagina('ferias', this)">
+            <button
+                class="menu-item ativo"
+                onclick="abrirPagina('ferias', this)"
+            >
                 Férias
             </button>
 
-            <button class="menu-item" onclick="abrirPagina('consignado', this)">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('consignado', this)"
+            >
                 Empréstimo consignado
             </button>
 
-            <button class="menu-item" onclick="abrirPagina('folha', this)">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('folha', this)"
+            >
                 Folha de pagamento
             </button>
 
 
-            <div class="menu-titulo espacamento">MATRÍCULA</div>
+            <div class="menu-titulo espacamento">
+                MATRÍCULA
+            </div>
 
-            <button class="menu-item" onclick="abrirPagina('cadastrar', this)">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('cadastrar', this)"
+            >
                 Cadastrar funcionário
             </button>
 
-            <button class="menu-item" onclick="abrirPagina('funcionarios', this)">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('funcionarios', this)"
+            >
                 Funcionários
             </button>
 
-            <button class="menu-item" onclick="abrirPagina('planilhas', this)">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('planilhas', this)"
+            >
                 Planilhas de funcionários
             </button>
 
-            <button class="menu-item" onclick="exportarFuncionarios()">
+            <button
+                class="menu-item"
+                onclick="exportarFuncionarios()"
+            >
                 Exportar funcionários
             </button>
 
         </nav>
 
         <div class="versao">
-            Prancheta RH<br>
+            Prancheta RH
             <span>Versão Beta</span>
         </div>
 
     </aside>
 
 
-    <!-- ÁREA PRINCIPAL -->
+    <!-- =========================
+         ÁREA PRINCIPAL
+    ========================== -->
+
     <main class="conteudo">
 
         <header class="cabecalho">
 
             <div>
                 <h1 id="tituloPagina">Férias</h1>
+
                 <p id="subtituloPagina">
                     Cálculo completo da remuneração de férias
                 </p>
@@ -86,6 +118,7 @@
     </main>
 
 </div>
+
 
 <script src="script.js"></script>
 
