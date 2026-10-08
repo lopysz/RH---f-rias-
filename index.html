@@ -13,10 +13,6 @@
 
 <div class="app">
 
-    <!-- =========================
-         MENU LATERAL
-    ========================== -->
-
     <aside class="sidebar">
 
         <div class="logo">
@@ -30,57 +26,35 @@
                 CÁLCULOS
             </div>
 
-            <button
-                class="menu-item ativo"
-                onclick="abrirPagina('ferias', this)"
-            >
+            <button class="menu-item ativo" data-pagina="ferias">
                 Férias
             </button>
 
-            <button
-                class="menu-item"
-                onclick="abrirPagina('consignado', this)"
-            >
+            <button class="menu-item" data-pagina="consignado">
                 Empréstimo consignado
             </button>
 
-            <button
-                class="menu-item"
-                onclick="abrirPagina('folha', this)"
-            >
+            <button class="menu-item" data-pagina="folha">
                 Folha de pagamento
             </button>
-
 
             <div class="menu-titulo espacamento">
                 MATRÍCULA
             </div>
 
-            <button
-                class="menu-item"
-                onclick="abrirPagina('cadastrar', this)"
-            >
+            <button class="menu-item" data-pagina="cadastrar">
                 Cadastrar funcionário
             </button>
 
-            <button
-                class="menu-item"
-                onclick="abrirPagina('funcionarios', this)"
-            >
+            <button class="menu-item" data-pagina="funcionarios">
                 Funcionários
             </button>
 
-            <button
-                class="menu-item"
-                onclick="abrirPagina('planilhas', this)"
-            >
+            <button class="menu-item" data-pagina="planilhas">
                 Planilhas de funcionários
             </button>
 
-            <button
-                class="menu-item"
-                onclick="exportarFuncionarios()"
-            >
+            <button class="menu-item" id="btnExportar">
                 Exportar funcionários
             </button>
 
@@ -92,11 +66,6 @@
         </div>
 
     </aside>
-
-
-    <!-- =========================
-         ÁREA PRINCIPAL
-    ========================== -->
 
     <main class="conteudo">
 
@@ -112,15 +81,13 @@
 
         </header>
 
-
         <section id="areaConteudo"></section>
 
     </main>
 
 </div>
 
-
-<script src="script.js"></script>
+<script src="./script.js"></script>
 
 </body>
 </html>
