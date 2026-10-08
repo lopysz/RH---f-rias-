@@ -109,6 +109,20 @@ function moeda(valor) {
 }
 
 
+/*
+   Converte valores numéricos em diversos formatos:
+
+   4559,59
+   4.559,59
+   4559.59
+   4,559.59
+   4,559,59
+
+   Todos passam a representar:
+
+   4559.59
+*/
+
 function numero(valor) {
 
     if (
@@ -119,26 +133,169 @@ function numero(valor) {
         return 0;
     }
 
-    if (typeof valor === "number") {
-        return valor;
+
+    if (
+        typeof valor === "number"
+    ) {
+
+        return Number.isFinite(valor)
+            ? valor
+            : 0;
+
     }
+
 
     let texto =
         String(valor)
             .trim()
             .replace(/\s/g, "");
 
+
+    if (!texto) {
+        return 0;
+    }
+
+
+    /*
+       Remove símbolos monetários,
+       mantendo números, ponto, vírgula
+       e sinal negativo.
+    */
+
+    texto =
+        texto.replace(
+            /[^\d,.\-]/g,
+            ""
+        );
+
+
+    if (!texto) {
+        return 0;
+    }
+
+
+    const quantidadeVirgulas =
+        (
+            texto.match(/,/g) || []
+        ).length;
+
+
+    const quantidadePontos =
+        (
+            texto.match(/\./g) || []
+        ).length;
+
+
+    /*
+       Caso 1:
+
+       4.559,59
+
+       O último separador é a vírgula.
+       Pontos são milhares.
+    */
+
     if (
-        texto.includes(",") &&
-        texto.includes(".")
+        quantidadeVirgulas > 0 &&
+        quantidadePontos > 0
     ) {
 
-        texto =
-            texto.replace(/\./g, "")
-                 .replace(",", ".");
+        const ultimaVirgula =
+            texto.lastIndexOf(",");
 
-    } else if (
-        texto.includes(",")
+        const ultimoPonto =
+            texto.lastIndexOf(".");
+
+
+        if (
+            ultimaVirgula >
+            ultimoPonto
+        ) {
+
+            texto =
+                texto
+                    .replace(/\./g, "")
+                    .replace(",", ".");
+
+        } else {
+
+            /*
+               Exemplo:
+
+               4,559.59
+            */
+
+            texto =
+                texto
+                    .replace(/,/g, "");
+
+        }
+
+    }
+
+
+    /*
+       Caso 2:
+
+       4,559,59
+
+       Duas vírgulas.
+       A última é decimal.
+    */
+
+    else if (
+        quantidadeVirgulas > 1
+    ) {
+
+        const partes =
+            texto.split(",");
+
+        const decimal =
+            partes.pop();
+
+        texto =
+            partes.join("") +
+            "." +
+            decimal;
+
+    }
+
+
+    /*
+       Caso 3:
+
+       4.559.59
+
+       Mais de um ponto.
+       O último é decimal.
+    */
+
+    else if (
+        quantidadePontos > 1
+    ) {
+
+        const partes =
+            texto.split(".");
+
+        const decimal =
+            partes.pop();
+
+        texto =
+            partes.join("") +
+            "." +
+            decimal;
+
+    }
+
+
+    /*
+       Caso 4:
+
+       4559,59
+    */
+
+    else if (
+        quantidadeVirgulas === 1
     ) {
 
         texto =
@@ -146,15 +303,14 @@ function numero(valor) {
 
     }
 
-    texto =
-        texto.replace(/[^\d.-]/g, "");
 
     const resultado =
         Number(texto);
 
-    return isNaN(resultado)
-        ? 0
-        : resultado;
+
+    return Number.isFinite(resultado)
+        ? resultado
+        : 0;
 
 }
 
@@ -249,10 +405,17 @@ function formatarData(data) {
 /*
    Tabela definida para o sistema:
 
-   Até R$ 1.621,00       → 7,5%
-   R$ 1.621,01 a 2.902,84 → 9%
-   R$ 2.902,85 a 4.354,27 → 12%
-   R$ 4.354,28 a 8.475,55 → 14%
+   Até R$ 1.621,00
+   → 7,5%
+
+   R$ 1.621,01 a R$ 2.902,84
+   → 9%
+
+   R$ 2.902,85 a R$ 4.354,27
+   → 12%
+
+   R$ 4.354,28 a R$ 8.475,55
+   → 14%
 
    O cálculo é PROGRESSIVO.
 */
@@ -288,7 +451,9 @@ function calcularINSS(salario) {
 
     /* Faixa 2 */
 
-    if (salario > 1621.00) {
+    if (
+        salario > 1621.00
+    ) {
 
         const faixa2 =
             Math.min(
@@ -304,7 +469,9 @@ function calcularINSS(salario) {
 
     /* Faixa 3 */
 
-    if (salario > 2902.84) {
+    if (
+        salario > 2902.84
+    ) {
 
         const faixa3 =
             Math.min(
@@ -320,7 +487,9 @@ function calcularINSS(salario) {
 
     /* Faixa 4 */
 
-    if (salario > 4354.27) {
+    if (
+        salario > 4354.27
+    ) {
 
         const faixa4 =
             Math.min(
@@ -1654,7 +1823,7 @@ function abrirConsignadoFuncionario() {
                 >
 
                 <small>
-                    Calculado automaticamente.
+                    Calculado automaticamente pela tabela do sistema.
                 </small>
 
             </div>
@@ -1758,6 +1927,14 @@ function calcularMargemConsignado() {
             "consBruto"
         );
 
+
+    /*
+       INSS NUNCA é obtido de um campo
+       editável.
+
+       Sempre é recalculado a partir
+       do salário bruto.
+    */
 
     const inss =
         calcularINSS(
@@ -2317,6 +2494,31 @@ function preencherConsignadoFuncionario() {
     }
 
 
+    /*
+       O INSS é sempre calculado novamente
+       a partir do salário.
+    */
+
+    const inss =
+        calcularINSS(
+            bruto
+        );
+
+
+    const campoINSS =
+        document.getElementById(
+            "planConsINSS"
+        );
+
+
+    if (campoINSS) {
+
+        campoINSS.value =
+            inss.toFixed(2);
+
+    }
+
+
     calcularMargemPlanilha();
 
 }
@@ -2555,6 +2757,11 @@ function salvarConsignado() {
         );
 
 
+    /*
+       Nunca utiliza o valor visual
+       do campo INSS.
+    */
+
     const inss =
         calcularINSS(
             bruto
@@ -2729,18 +2936,7 @@ function limparConsignado() {
             }
 
 
-            if (
-                campo.tagName ===
-                "SELECT"
-            ) {
-
-                campo.value = "";
-
-            } else {
-
-                campo.value = "";
-
-            }
+            campo.value = "";
 
         }
     );
@@ -3321,9 +3517,10 @@ function obterValorColuna(
     }
 
 
-    return
+    return (
         linha[indice] ??
-        "";
+        ""
+    );
 
 }
 
@@ -3334,70 +3531,20 @@ function obterValorColuna(
 
 function converterNumeroExcel(valor) {
 
-    if (
-        valor === null ||
-        valor === undefined ||
-        valor === ""
-    ) {
+    /*
+       Usa a mesma conversão robusta
+       usada pelo restante do sistema.
 
-        return 0;
+       Exemplos:
 
-    }
+       4.559,59  → 4559.59
+       4559,59   → 4559.59
+       4,559.59  → 4559.59
+       4,559,59  → 4559.59
+       4559.59   → 4559.59
+    */
 
-
-    if (
-        typeof valor ===
-        "number"
-    ) {
-
-        return valor;
-
-    }
-
-
-    let texto =
-        String(valor)
-            .trim()
-            .replace(/\s/g, "");
-
-
-    if (
-        texto.includes(".") &&
-        texto.includes(",")
-    ) {
-
-        texto =
-            texto
-                .replace(/\./g, "")
-                .replace(",", ".");
-
-    } else if (
-        texto.includes(",")
-    ) {
-
-        texto =
-            texto.replace(
-                ",",
-                "."
-            );
-
-    }
-
-
-    texto =
-        texto.replace(
-            /[^\d.-]/g,
-            ""
-        );
-
-
-    const resultado =
-        Number(texto);
-
-
-    return isNaN(resultado)
-        ? 0
-        : resultado;
+    return numero(valor);
 
 }
 
@@ -3733,6 +3880,13 @@ async function importarFuncionarios(input) {
             }
 
 
+            /*
+               CORREÇÃO PRINCIPAL:
+
+               O salário passa pela nova
+               conversão numérica robusta.
+            */
+
             const salario =
                 converterNumeroExcel(
                     obterValorColuna(
@@ -4064,22 +4218,27 @@ async function importarConsignado(input) {
             /*
              * Prioridade:
              * salário cadastrado no funcionário.
+             *
              * Se não existir, usa o salário da planilha.
              */
 
-            const salarioBruto =
+            const salarioFuncionario =
                 numero(
                     funcionario.salario
-                ) > 0
-                    ? numero(
-                        funcionario.salario
-                    )
+                );
+
+
+            const salarioBruto =
+                salarioFuncionario > 0
+                    ? salarioFuncionario
                     : salarioImportado;
 
 
             /*
              * INSS NÃO é importado.
-             * É sempre recalculado pelo sistema.
+             *
+             * É SEMPRE recalculado
+             * pela tabela do sistema.
              */
 
             const inss =
@@ -4106,13 +4265,17 @@ async function importarConsignado(input) {
                 );
 
 
-            const percentual =
+            const percentualImportado =
                 converterNumeroExcel(
                     obterValorColuna(
                         linha,
                         colunaPercentual
                     )
-                ) ||
+                );
+
+
+            const percentual =
+                percentualImportado ||
                 35;
 
 
@@ -4453,7 +4616,7 @@ function exportarFuncionarios() {
 
                     f.cargo,
 
-                    f.salario,
+                    numero(f.salario),
 
                     f.admissao
 
@@ -4510,7 +4673,7 @@ function exportarFuncionarios() {
                 f.matricula,
                 f.cpf,
                 f.cargo,
-                f.salario,
+                numero(f.salario),
                 f.admissao
 
             ]
@@ -4567,6 +4730,39 @@ function exportarConsignados() {
     consignados.forEach(
         c => {
 
+            /*
+               Recalcula o INSS no momento da
+               exportação para nunca depender
+               de um valor antigo salvo.
+            */
+
+            const salarioBruto =
+                numero(
+                    c.salarioBruto
+                );
+
+
+            const inss =
+                calcularINSS(
+                    salarioBruto
+                );
+
+
+            const irrf =
+                numero(
+                    c.irrf
+                );
+
+
+            const salarioLiquidoBase =
+                Math.max(
+                    salarioBruto -
+                    inss -
+                    irrf,
+                    0
+                );
+
+
             dados.push([
 
                 c.matricula,
@@ -4577,18 +4773,13 @@ function exportarConsignados() {
 
                 c.contrato,
 
-                c.salarioBruto,
+                salarioBruto,
 
-                /*
-                 * Exporta o INSS calculado.
-                 */
-                calcularINSS(
-                    c.salarioBruto
-                ),
+                inss,
 
-                c.irrf,
+                irrf,
 
-                c.salarioLiquidoBase,
+                salarioLiquidoBase,
 
                 c.percentualMargem,
 
