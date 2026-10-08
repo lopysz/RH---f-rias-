@@ -10,51 +10,50 @@ body {
     color: #25282b;
 }
 
-button,
-input,
-select {
-    font-family: inherit;
-}
 
-
-/* =========================
+/* ==================================================
    ESTRUTURA
-========================= */
+================================================== */
 
 .app {
-    display: flex;
     min-height: 100vh;
 }
 
 
-/* =========================
+/* ==================================================
    SIDEBAR
-========================= */
+================================================== */
 
 .sidebar {
-    width: 245px;
-    min-width: 245px;
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 240px;
+
     background: #ffffff;
-    border-right: 1px solid #dcdfe3;
+
+    border-right: 1px solid #dfe2e5;
 
     display: flex;
     flex-direction: column;
 
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    z-index: 10;
 }
 
 
 /* LOGO */
 
 .logo {
-    height: 90px;
-    background: #1f6b45;
-    color: white;
+    height: 88px;
 
-    padding: 20px 18px;
+    background: #1f6b45;
+
+    color: #ffffff;
+
+    padding: 18px;
 
     display: flex;
     flex-direction: column;
@@ -67,8 +66,10 @@ select {
 }
 
 .logo span {
-    font-size: 11px;
     margin-top: 5px;
+
+    font-size: 11px;
+
     opacity: .85;
 }
 
@@ -77,16 +78,20 @@ select {
 
 .menu {
     padding: 22px 12px;
+
     overflow-y: auto;
 }
 
 .menu-titulo {
-    font-size: 11px;
-    font-weight: bold;
-    color: #777;
-    letter-spacing: .8px;
-
     padding: 0 10px 8px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #777;
+
+    letter-spacing: .8px;
 }
 
 .espacamento {
@@ -97,6 +102,7 @@ select {
     width: 100%;
 
     border: none;
+
     background: transparent;
 
     text-align: left;
@@ -112,8 +118,6 @@ select {
     font-size: 14px;
 
     cursor: pointer;
-
-    transition: .15s;
 }
 
 .menu-item:hover {
@@ -122,10 +126,13 @@ select {
 
 .menu-item.ativo {
     background: #e7f1eb;
+
     color: #1f6b45;
+
     font-weight: bold;
 
     border-left: 3px solid #1f6b45;
+
     padding-left: 9px;
 }
 
@@ -140,22 +147,25 @@ select {
     padding: 15px 18px;
 
     font-size: 11px;
+
     color: #777;
 }
 
 .versao span {
+    display: block;
+
+    margin-top: 3px;
+
     color: #999;
 }
 
 
-/* =========================
+/* ==================================================
    CONTEÚDO
-========================= */
+================================================== */
 
 .conteudo {
-    margin-left: 245px;
-
-    width: calc(100% - 245px);
+    margin-left: 240px;
 
     min-height: 100vh;
 
@@ -175,31 +185,34 @@ select {
 
 .cabecalho h1 {
     font-size: 25px;
+
     font-weight: 600;
 }
 
 .cabecalho p {
-    color: #73777b;
-    font-size: 13px;
     margin-top: 5px;
+
+    color: #73777b;
+
+    font-size: 13px;
 }
 
 
 /* ÁREA */
 
 #areaConteudo {
-    padding: 28px 35px 50px;
+    padding: 28px 35px 60px;
 
-    max-width: 1500px;
+    max-width: 1550px;
 }
 
 
-/* =========================
+/* ==================================================
    CARDS
-========================= */
+================================================== */
 
 .card {
-    background: white;
+    background: #ffffff;
 
     border: 1px solid #dddfe2;
 
@@ -216,13 +229,16 @@ select {
 
 .card-cabecalho h2 {
     font-size: 16px;
+
     font-weight: 600;
 }
 
 .card-cabecalho p {
-    font-size: 12px;
-    color: #777;
     margin-top: 4px;
+
+    font-size: 12px;
+
+    color: #777;
 }
 
 .card-corpo {
@@ -230,21 +246,22 @@ select {
 }
 
 
-/* =========================
+/* ==================================================
    FORMULÁRIOS
-========================= */
+================================================== */
 
 .form-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(4, minmax(160px, 1fr));
+        repeat(4, minmax(170px, 1fr));
 
     gap: 16px;
 }
 
 .form-grupo {
     display: flex;
+
     flex-direction: column;
 }
 
@@ -253,11 +270,13 @@ select {
 }
 
 .form-grupo label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #555;
-
     margin-bottom: 6px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #555;
 }
 
 .form-grupo input,
@@ -272,7 +291,7 @@ select {
 
     padding: 0 11px;
 
-    background: white;
+    background: #ffffff;
 
     font-size: 14px;
 
@@ -282,27 +301,129 @@ select {
 .form-grupo input:focus,
 .form-grupo select:focus {
     border-color: #1f6b45;
-    box-shadow: 0 0 0 2px rgba(31,107,69,.08);
+
+    box-shadow:
+        0 0 0 2px rgba(31, 107, 69, .08);
 }
 
 
-/* =========================
-   LINHAS DE VALORES
-========================= */
+/* ==================================================
+   FUNCIONÁRIO SELECIONADO
+================================================== */
+
+.funcionario-selecionado {
+    margin-top: 18px;
+
+    padding: 15px;
+
+    border: 1px solid #cfe0d5;
+
+    background: #f1f7f3;
+
+    border-radius: 4px;
+
+    display: none;
+}
+
+.funcionario-selecionado.mostrar {
+    display: block;
+}
+
+.funcionario-selecionado strong {
+    color: #1f6b45;
+}
+
+.funcionario-info {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 25px;
+
+    margin-top: 8px;
+
+    font-size: 13px;
+
+    color: #444;
+}
+
+
+/* ==================================================
+   COMPONENTES DA REMUNERAÇÃO
+================================================== */
+
+.componentes-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(220px, 1fr));
+
+    gap: 16px;
+}
+
+.componente {
+    border: 1px solid #e0e2e4;
+
+    border-radius: 4px;
+
+    padding: 15px;
+
+    background: #fafafa;
+}
+
+.componente label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #555;
+}
+
+.componente input {
+    width: 100%;
+
+    height: 40px;
+
+    border: 1px solid #cfd2d5;
+
+    border-radius: 4px;
+
+    padding: 0 10px;
+
+    font-size: 14px;
+}
+
+.componente small {
+    display: block;
+
+    margin-top: 7px;
+
+    font-size: 11px;
+
+    color: #888;
+}
+
+
+/* ==================================================
+   VALORES
+================================================== */
 
 .valor-lista {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 .valor-linha {
     display: grid;
 
-    grid-template-columns: 1fr 180px;
+    grid-template-columns: 1fr 190px;
 
     align-items: center;
 
-    min-height: 44px;
+    min-height: 45px;
 
     border-bottom: 1px solid #eeeeee;
 }
@@ -313,6 +434,7 @@ select {
 
 .valor-linha span:first-child {
     font-size: 13px;
+
     color: #45494d;
 }
 
@@ -320,75 +442,80 @@ select {
     text-align: right;
 
     font-weight: 500;
-
-    color: #25282b;
-}
-
-.valor-total {
-    font-size: 17px;
-    font-weight: bold;
 }
 
 
-/* =========================
+/* ==================================================
    TOTAL BRUTO
-========================= */
+================================================== */
 
 .total-bruto {
-    background: #edf6f0;
-
-    border: 1px solid #c9dfd1;
+    margin-top: 20px;
 
     padding: 20px;
 
+    border: 1px solid #c9dfd1;
+
+    background: #edf6f0;
+
+    border-radius: 4px;
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 }
 
 .total-bruto .descricao {
     font-size: 14px;
+
     font-weight: bold;
+
     color: #1f6b45;
 }
 
 .total-bruto .numero {
-    font-size: 24px;
+    font-size: 25px;
+
     font-weight: bold;
+
     color: #1f6b45;
 }
 
 
-/* =========================
+/* ==================================================
    BOTÕES
-========================= */
+================================================== */
 
 .botoes {
     display: flex;
+
     gap: 10px;
 
     margin-top: 20px;
 }
 
 .btn {
-    border: none;
-
     height: 42px;
 
     padding: 0 20px;
+
+    border: none;
 
     border-radius: 4px;
 
     cursor: pointer;
 
-    font-weight: 600;
-
     font-size: 13px;
+
+    font-weight: 600;
 }
 
 .btn-principal {
     background: #1f6b45;
-    color: white;
+
+    color: #ffffff;
 }
 
 .btn-principal:hover {
@@ -397,6 +524,7 @@ select {
 
 .btn-secundario {
     background: #e8eaec;
+
     color: #383c40;
 }
 
@@ -405,42 +533,9 @@ select {
 }
 
 
-/* =========================
-   RESULTADO
-========================= */
-
-.resultado {
-    margin-top: 20px;
-
-    padding: 18px;
-
-    background: #fafafa;
-
-    border: 1px solid #ddd;
-
-    border-radius: 4px;
-}
-
-.resultado strong {
-    display: block;
-
-    font-size: 12px;
-
-    color: #777;
-
-    margin-bottom: 5px;
-}
-
-.resultado .numero {
-    font-size: 24px;
-
-    font-weight: bold;
-}
-
-
-/* =========================
+/* ==================================================
    TABELA
-========================= */
+================================================== */
 
 .tabela-container {
     overflow-x: auto;
@@ -459,13 +554,13 @@ thead {
 }
 
 th {
-    text-align: left;
-
     padding: 12px;
 
-    font-size: 12px;
+    text-align: left;
 
     color: #555;
+
+    font-size: 12px;
 
     border-bottom: 1px solid #ddd;
 }
@@ -476,38 +571,37 @@ td {
     border-bottom: 1px solid #eee;
 }
 
-tr:hover td {
-    background: #fafafa;
-}
 
-
-/* =========================
+/* ==================================================
    RESPONSIVO
-========================= */
+================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
 
     .form-grid {
         grid-template-columns:
-            repeat(2, minmax(150px, 1fr));
+            repeat(2, minmax(180px, 1fr));
     }
 
+    .componentes-grid {
+        grid-template-columns:
+            repeat(2, minmax(200px, 1fr));
+    }
 }
 
-@media (max-width: 700px) {
+
+@media (max-width: 750px) {
 
     .sidebar {
-        width: 205px;
-        min-width: 205px;
+        width: 210px;
     }
 
     .conteudo {
-        margin-left: 205px;
-        width: calc(100% - 205px);
+        margin-left: 210px;
     }
 
     #areaConteudo {
-        padding: 20px 15px;
+        padding: 20px 15px 40px;
     }
 
     .cabecalho {
@@ -522,8 +616,11 @@ tr:hover td {
         grid-column: span 1;
     }
 
-    .valor-linha {
-        grid-template-columns: 1fr 130px;
+    .componentes-grid {
+        grid-template-columns: 1fr;
     }
 
+    .valor-linha {
+        grid-template-columns: 1fr 140px;
+    }
 }
