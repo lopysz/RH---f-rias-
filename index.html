@@ -1,188 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Prancheta RH</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 
 <body>
 
-    <div class="app">
+<div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <strong>PRANCHETA RH</strong>
+            <span>Sistema de Recursos Humanos</span>
+        </div>
+
+        <nav class="menu">
+
+            <div class="menu-titulo">CÁLCULOS</div>
+
+            <button class="menu-item ativo" onclick="abrirPagina('ferias', this)">
+                Férias
+            </button>
+
+            <button class="menu-item" onclick="abrirPagina('consignado', this)">
+                Empréstimo consignado
+            </button>
+
+            <button class="menu-item" onclick="abrirPagina('folha', this)">
+                Folha de pagamento
+            </button>
 
 
-        <!-- ============================= -->
-        <!-- MENU LATERAL -->
-        <!-- ============================= -->
+            <div class="menu-titulo espacamento">MATRÍCULA</div>
 
-        <aside class="sidebar">
+            <button class="menu-item" onclick="abrirPagina('cadastrar', this)">
+                Cadastrar funcionário
+            </button>
 
-            <div class="logo">
+            <button class="menu-item" onclick="abrirPagina('funcionarios', this)">
+                Funcionários
+            </button>
 
-                <div class="logo-icon">
-                    PR
-                </div>
+            <button class="menu-item" onclick="abrirPagina('planilhas', this)">
+                Planilhas de funcionários
+            </button>
+
+            <button class="menu-item" onclick="exportarFuncionarios()">
+                Exportar funcionários
+            </button>
+
+        </nav>
+
+        <div class="versao">
+            Prancheta RH<br>
+            <span>Versão Beta</span>
+        </div>
+
+    </aside>
 
 
-                <div>
+    <!-- ÁREA PRINCIPAL -->
+    <main class="conteudo">
 
-                    <h1>Prancheta RH</h1>
+        <header class="cabecalho">
 
-                    <span>
-                        Recursos Humanos
-                    </span>
-
-                </div>
-
+            <div>
+                <h1 id="tituloPagina">Férias</h1>
+                <p id="subtituloPagina">
+                    Cálculo completo da remuneração de férias
+                </p>
             </div>
 
-
-            <div class="menu">
-
-
-                <!-- CÁLCULOS -->
-
-                <div class="grupo">
-
-                    <div class="titulo-grupo">
-                        CÁLCULOS
-                    </div>
+        </header>
 
 
-                    <button
-                        class="menu-item ativo"
-                        onclick="abrirPagina('ferias', this)"
-                    >
-                        <span>Férias</span>
-                    </button>
+        <section id="areaConteudo"></section>
 
+    </main>
 
-                    <button
-                        class="menu-item"
-                        onclick="abrirPagina('consignado', this)"
-                    >
-                        <span>Empréstimo consignado</span>
-                    </button>
+</div>
 
-
-                    <button
-                        class="menu-item"
-                        onclick="abrirPagina('folha', this)"
-                    >
-                        <span>Folha de pagamento</span>
-                    </button>
-
-                </div>
-
-
-
-                <!-- MATRÍCULA -->
-
-                <div class="grupo">
-
-                    <div class="titulo-grupo">
-                        MATRÍCULA
-                    </div>
-
-
-                    <button
-                        class="menu-item"
-                        onclick="abrirPagina('cadastrar', this)"
-                    >
-                        <span>Cadastrar funcionário</span>
-                    </button>
-
-
-                    <button
-                        class="menu-item"
-                        onclick="abrirPagina('funcionarios', this)"
-                    >
-                        <span>Funcionários</span>
-                    </button>
-
-
-                    <button
-                        class="menu-item"
-                        onclick="abrirPagina('planilhas', this)"
-                    >
-                        <span>Planilhas de funcionários</span>
-                    </button>
-
-
-                    <button
-                        class="menu-item"
-                        onclick="exportarFuncionarios()"
-                    >
-                        <span>Exportar funcionários</span>
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="versao">
-
-                Prancheta RH<br>
-
-                <span>Versão Beta</span>
-
-            </div>
-
-        </aside>
-
-
-
-        <!-- ============================= -->
-        <!-- ÁREA PRINCIPAL -->
-        <!-- ============================= -->
-
-        <main class="conteudo">
-
-            <header class="cabecalho">
-
-                <div>
-
-                    <h2 id="tituloPagina">
-                        Cálculo de Férias
-                    </h2>
-
-                    <p id="subtituloPagina">
-                        Cálculo e controle de férias
-                    </p>
-
-                </div>
-
-            </header>
-
-
-            <!-- CONTEÚDO -->
-
-            <section
-                id="areaConteudo"
-                class="area-conteudo"
-            >
-
-            </section>
-
-        </main>
-
-    </div>
-
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
-
 </html>
