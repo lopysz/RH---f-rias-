@@ -17,22 +17,37 @@ function carregarFuncionarios() {
         const dados =
             localStorage.getItem("pranchetaFuncionarios");
 
+
         if (!dados) {
+
             return [];
+
         }
 
-        const lista = JSON.parse(dados);
 
-        return Array.isArray(lista) ? lista : [];
+        const lista =
+            JSON.parse(dados);
+
+
+        return Array.isArray(lista)
+            ? lista
+            : [];
+
 
     } catch (erro) {
 
-        console.error("Erro ao carregar funcionários:", erro);
+        console.error(
+            "Erro ao carregar funcionários:",
+            erro
+        );
+
 
         return [];
 
     }
+
 }
+
 
 
 function salvarFuncionarios() {
@@ -45,6 +60,7 @@ function salvarFuncionarios() {
 }
 
 
+
 /* =========================================================
    BANCO LOCAL DE CONSIGNADOS
 ========================================================= */
@@ -52,30 +68,47 @@ function salvarFuncionarios() {
 let consignados = carregarConsignados();
 
 
+
 function carregarConsignados() {
 
     try {
 
         const dados =
-            localStorage.getItem("pranchetaConsignados");
+            localStorage.getItem(
+                "pranchetaConsignados"
+            );
+
 
         if (!dados) {
+
             return [];
+
         }
 
-        const lista = JSON.parse(dados);
 
-        return Array.isArray(lista) ? lista : [];
+        const lista =
+            JSON.parse(dados);
+
+
+        return Array.isArray(lista)
+            ? lista
+            : [];
+
 
     } catch (erro) {
 
-        console.error("Erro ao carregar consignados:", erro);
+        console.error(
+            "Erro ao carregar consignados:",
+            erro
+        );
+
 
         return [];
 
     }
 
 }
+
 
 
 function salvarConsignados() {
@@ -88,111 +121,198 @@ function salvarConsignados() {
 }
 
 
+
 /* =========================================================
    UTILITÁRIOS
 ========================================================= */
 
 function moeda(valor) {
 
-    valor = Number(valor) || 0;
+    valor =
+        Number(valor) || 0;
 
-    return valor.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
+
+    return valor.toLocaleString(
+        "pt-BR",
+        {
+            style: "currency",
+            currency: "BRL"
+        }
+    );
 
 }
+
 
 
 function numero(valor) {
 
-    const n = Number(valor);
+    const n =
+        Number(valor);
 
-    return Number.isFinite(n) ? n : 0;
+
+    return Number.isFinite(n)
+        ? n
+        : 0;
 
 }
 
 
+
 function valorCampo(id) {
 
-    const campo = document.getElementById(id);
+    const campo =
+        document.getElementById(id);
+
 
     if (!campo) {
+
         return 0;
+
     }
+
 
     return numero(campo.value);
 
 }
 
 
+
 function atualizarTexto(id, texto) {
 
-    const elemento = document.getElementById(id);
+    const elemento =
+        document.getElementById(id);
+
 
     if (elemento) {
-        elemento.textContent = texto;
+
+        elemento.textContent =
+            texto;
+
     }
 
 }
+
 
 
 function escapar(texto) {
 
-    if (texto === null || texto === undefined) {
+    if (
+        texto === null ||
+        texto === undefined
+    ) {
+
         return "";
+
     }
 
+
     return String(texto)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
+
 function dataAtual() {
 
-    const agora = new Date();
+    const agora =
+        new Date();
 
-    const ano = agora.getFullYear();
-    const mes = String(agora.getMonth() + 1).padStart(2, "0");
-    const dia = String(agora.getDate()).padStart(2, "0");
+
+    const ano =
+        agora.getFullYear();
+
+
+    const mes =
+        String(
+            agora.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const dia =
+        String(
+            agora.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
 
     return `${ano}-${mes}-${dia}`;
 
 }
 
 
+
 function formatarData(data) {
 
     if (!data) {
+
         return "-";
+
     }
 
-    const partes = String(data).split("-");
 
-    if (partes.length !== 3) {
+    const partes =
+        String(data).split("-");
+
+
+    if (
+        partes.length !== 3
+    ) {
+
         return data;
+
     }
+
 
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
 
 }
 
 
+
 /* =========================================================
-   TÍTULO DA PÁGINA
+   TÍTULO
 ========================================================= */
 
-function titulo(principal, secundario) {
+function titulo(
+    principal,
+    secundario
+) {
 
     atualizarTexto(
         "tituloPagina",
         principal
     );
+
 
     atualizarTexto(
         "subtituloPagina",
@@ -202,31 +322,48 @@ function titulo(principal, secundario) {
 }
 
 
+
 /* =========================================================
    NAVEGAÇÃO
 ========================================================= */
 
-function abrirPagina(nome, botao) {
+function abrirPagina(
+    nome,
+    botao
+) {
 
-    document.querySelectorAll(".menu-item").forEach(function(item) {
 
-        item.classList.remove("ativo");
+    document
+        .querySelectorAll(".menu-item")
+        .forEach(function(item) {
 
-    });
+            item.classList.remove(
+                "ativo"
+            );
+
+        });
+
 
 
     if (botao) {
-        botao.classList.add("ativo");
+
+        botao.classList.add(
+            "ativo"
+        );
+
     }
 
 
+
     switch (nome) {
+
 
         case "ferias":
 
             mostrarFerias();
 
             break;
+
 
 
         case "consignado":
@@ -236,11 +373,13 @@ function abrirPagina(nome, botao) {
             break;
 
 
+
         case "folha":
 
             mostrarFolha();
 
             break;
+
 
 
         case "cadastrar":
@@ -250,11 +389,13 @@ function abrirPagina(nome, botao) {
             break;
 
 
+
         case "funcionarios":
 
             mostrarFuncionarios();
 
             break;
+
 
 
         case "planilhas":
@@ -264,11 +405,29 @@ function abrirPagina(nome, botao) {
             break;
 
 
+
         case "planilhaConsignado":
 
             mostrarPlanilhaConsignado();
 
             break;
+
+
+
+        case "importarFuncionarios":
+
+            mostrarImportarFuncionarios();
+
+            break;
+
+
+
+        case "importarConsignado":
+
+            mostrarImportarConsignado();
+
+            break;
+
 
 
         default:
@@ -282,11 +441,13 @@ function abrirPagina(nome, botao) {
 }
 
 
+
 /* =========================================================
    CADASTRO DE FUNCIONÁRIO
 ========================================================= */
 
 function mostrarCadastro() {
+
 
     titulo(
         "Cadastrar funcionário",
@@ -294,13 +455,21 @@ function mostrarCadastro() {
     );
 
 
-    document.getElementById("areaConteudo").innerHTML = `
+
+    document.getElementById(
+        "areaConteudo"
+    ).innerHTML = `
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>Novo funcionário</h2>
+                <h2>
+                    Novo funcionário
+                </h2>
+
 
                 <p>
                     Preencha os dados básicos do funcionário.
@@ -309,13 +478,19 @@ function mostrarCadastro() {
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo largo">
 
-                        <label>Nome completo</label>
+                        <label>
+                            Nome completo
+                        </label>
+
 
                         <input
                             type="text"
@@ -326,9 +501,13 @@ function mostrarCadastro() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>CPF</label>
+                        <label>
+                            CPF
+                        </label>
+
 
                         <input
                             type="text"
@@ -339,9 +518,13 @@ function mostrarCadastro() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Matrícula</label>
+                        <label>
+                            Matrícula
+                        </label>
+
 
                         <input
                             type="text"
@@ -352,9 +535,13 @@ function mostrarCadastro() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Cargo</label>
+                        <label>
+                            Cargo
+                        </label>
+
 
                         <input
                             type="text"
@@ -365,9 +552,13 @@ function mostrarCadastro() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Salário</label>
+                        <label>
+                            Salário
+                        </label>
+
 
                         <input
                             type="number"
@@ -380,9 +571,13 @@ function mostrarCadastro() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Data de admissão</label>
+                        <label>
+                            Data de admissão
+                        </label>
+
 
                         <input
                             type="date"
@@ -391,10 +586,13 @@ function mostrarCadastro() {
 
                     </div>
 
+
                 </div>
 
 
+
                 <div class="botoes">
+
 
                     <button
                         class="btn btn-principal"
@@ -403,6 +601,8 @@ function mostrarCadastro() {
                         Cadastrar funcionário
                     </button>
 
+
+
                     <button
                         class="btn btn-secundario"
                         onclick="mostrarCadastro()"
@@ -410,9 +610,12 @@ function mostrarCadastro() {
                         Limpar
                     </button>
 
+
                 </div>
 
+
             </div>
+
 
         </div>
 
@@ -421,46 +624,75 @@ function mostrarCadastro() {
 }
 
 
+
 function cadastrarFuncionario() {
 
+
     const nome =
-        document.getElementById("cadNome").value.trim();
+        document
+            .getElementById("cadNome")
+            .value
+            .trim();
+
 
     const cpf =
-        document.getElementById("cadCpf").value.trim();
+        document
+            .getElementById("cadCpf")
+            .value
+            .trim();
+
 
     const matricula =
-        document.getElementById("cadMatricula").value.trim();
+        document
+            .getElementById("cadMatricula")
+            .value
+            .trim();
+
 
     const cargo =
-        document.getElementById("cadCargo").value.trim();
+        document
+            .getElementById("cadCargo")
+            .value
+            .trim();
+
 
     const salario =
         valorCampo("cadSalario");
 
+
     const admissao =
-        document.getElementById("cadAdmissao").value;
+        document
+            .getElementById("cadAdmissao")
+            .value;
+
 
 
     if (!nome) {
 
-        alert("Informe o nome do funcionário.");
+        alert(
+            "Informe o nome do funcionário."
+        );
 
         return;
 
     }
+
 
 
     if (!matricula) {
 
-        alert("Informe a matrícula.");
+        alert(
+            "Informe a matrícula."
+        );
 
         return;
 
     }
 
 
+
     const funcionario = {
+
 
         id:
             "FUNC-" +
@@ -470,30 +702,53 @@ function cadastrarFuncionario() {
                 .toString(36)
                 .substring(2, 8),
 
-        nome: nome,
 
-        cpf: cpf,
+        nome:
+            nome,
 
-        matricula: matricula,
 
-        cargo: cargo,
+        cpf:
+            cpf,
 
-        salario: salario,
 
-        admissao: admissao
+        matricula:
+            matricula,
+
+
+        cargo:
+            cargo,
+
+
+        salario:
+            salario,
+
+
+        admissao:
+            admissao
 
     };
 
 
-    funcionarios.push(funcionario);
+
+    funcionarios.push(
+        funcionario
+    );
+
 
     salvarFuncionarios();
 
-    alert("Funcionário cadastrado com sucesso.");
+
+
+    alert(
+        "Funcionário cadastrado com sucesso."
+    );
+
+
 
     mostrarFuncionarios();
 
 }
+
 
 
 /* =========================================================
@@ -502,102 +757,152 @@ function cadastrarFuncionario() {
 
 function mostrarFuncionarios() {
 
+
     titulo(
         "Funcionários",
         "Cadastro geral de funcionários"
     );
 
 
+
     let linhas = "";
 
 
-    if (funcionarios.length === 0) {
+
+    if (
+        funcionarios.length === 0
+    ) {
+
 
         linhas = `
 
             <tr>
 
                 <td colspan="7">
+
                     Nenhum funcionário cadastrado.
+
                 </td>
 
             </tr>
 
         `;
 
+
     } else {
 
-        linhas = funcionarios.map(function(funcionario) {
 
-            return `
+        linhas =
+            funcionarios
+                .map(function(funcionario) {
 
-                <tr>
 
-                    <td>
-                        ${escapar(funcionario.nome)}
-                    </td>
+                    return `
 
-                    <td>
-                        ${escapar(funcionario.cpf)}
-                    </td>
+                        <tr>
 
-                    <td>
-                        ${escapar(funcionario.matricula)}
-                    </td>
 
-                    <td>
-                        ${escapar(funcionario.cargo)}
-                    </td>
+                            <td>
+                                ${escapar(
+                                    funcionario.nome
+                                )}
+                            </td>
 
-                    <td>
-                        ${moeda(funcionario.salario)}
-                    </td>
 
-                    <td>
-                        ${formatarData(funcionario.admissao)}
-                    </td>
+                            <td>
+                                ${escapar(
+                                    funcionario.cpf
+                                )}
+                            </td>
 
-                    <td>
 
-                        <button
-                            class="btn btn-principal"
-                            onclick="abrirFeriasFuncionario('${funcionario.id}')"
-                        >
-                            Calcular férias
-                        </button>
+                            <td>
+                                ${escapar(
+                                    funcionario.matricula
+                                )}
+                            </td>
 
-                    </td>
 
-                </tr>
+                            <td>
+                                ${escapar(
+                                    funcionario.cargo
+                                )}
+                            </td>
 
-            `;
 
-        }).join("");
+                            <td>
+                                ${moeda(
+                                    funcionario.salario
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatarData(
+                                    funcionario.admissao
+                                )}
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="btn btn-principal"
+                                    onclick="abrirFeriasFuncionario('${funcionario.id}')"
+                                >
+                                    Calcular férias
+                                </button>
+
+                            </td>
+
+
+                        </tr>
+
+                    `;
+
+                })
+                .join("");
 
     }
 
 
-    document.getElementById("areaConteudo").innerHTML = `
+
+    document.getElementById(
+        "areaConteudo"
+    ).innerHTML = `
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>Funcionários cadastrados</h2>
+                <h2>
+                    Funcionários cadastrados
+                </h2>
+
 
                 <p>
+
                     Total de funcionários:
-                    <strong>${funcionarios.length}</strong>
+                    <strong>
+                        ${funcionarios.length}
+                    </strong>
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="tabela-container">
 
+
                     <table>
+
 
                         <thead>
 
@@ -615,17 +920,22 @@ function mostrarFuncionarios() {
 
                         </thead>
 
+
                         <tbody>
 
                             ${linhas}
 
                         </tbody>
 
+
                     </table>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
@@ -634,11 +944,15 @@ function mostrarFuncionarios() {
 }
 
 
+
 /* =========================================================
    FÉRIAS
 ========================================================= */
 
-function mostrarFerias(funcionarioId = "") {
+function mostrarFerias(
+    funcionarioId = ""
+) {
+
 
     titulo(
         "Férias",
@@ -646,35 +960,66 @@ function mostrarFerias(funcionarioId = "") {
     );
 
 
+
     let opcoes = `
-        <option value="">Selecione um funcionário</option>
+
+        <option value="">
+            Selecione um funcionário
+        </option>
+
     `;
 
 
-    funcionarios.forEach(function(funcionario) {
 
-        opcoes += `
-
-            <option
-                value="${funcionario.id}"
-                ${funcionario.id === funcionarioId ? "selected" : ""}
-            >
-                ${escapar(funcionario.nome)}
-                - Matrícula ${escapar(funcionario.matricula)}
-            </option>
-
-        `;
-
-    });
+    funcionarios.forEach(
+        function(funcionario) {
 
 
-    document.getElementById("areaConteudo").innerHTML = `
+            opcoes += `
+
+                <option
+                    value="${funcionario.id}"
+                    ${
+                        funcionario.id === funcionarioId
+                            ? "selected"
+                            : ""
+                    }
+                >
+
+                    ${escapar(
+                        funcionario.nome
+                    )}
+
+                    -
+
+                    Matrícula
+                    ${escapar(
+                        funcionario.matricula
+                    )}
+
+                </option>
+
+            `;
+
+        }
+    );
+
+
+
+    document.getElementById(
+        "areaConteudo"
+    ).innerHTML = `
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>Funcionário</h2>
+                <h2>
+                    Funcionário
+                </h2>
+
 
                 <p>
                     Selecione o funcionário para iniciar o cálculo.
@@ -683,13 +1028,19 @@ function mostrarFerias(funcionarioId = "") {
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo largo">
 
-                        <label>Funcionário</label>
+                        <label>
+                            Funcionário
+                        </label>
+
 
                         <select
                             id="feriasFuncionario"
@@ -703,9 +1054,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Início do período aquisitivo</label>
+                        <label>
+                            Início do período aquisitivo
+                        </label>
+
 
                         <input
                             type="date"
@@ -715,9 +1070,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Fim do período aquisitivo</label>
+                        <label>
+                            Fim do período aquisitivo
+                        </label>
+
 
                         <input
                             type="date"
@@ -727,9 +1086,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Dias de direito</label>
+                        <label>
+                            Dias de direito
+                        </label>
+
 
                         <input
                             type="number"
@@ -741,9 +1104,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Dias de férias</label>
+                        <label>
+                            Dias de férias
+                        </label>
+
 
                         <input
                             type="number"
@@ -757,9 +1124,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Faltas injustificadas</label>
+                        <label>
+                            Faltas injustificadas
+                        </label>
+
 
                         <input
                             type="number"
@@ -772,9 +1143,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Dias vendidos</label>
+                        <label>
+                            Dias vendidos
+                        </label>
+
 
                         <input
                             type="number"
@@ -788,9 +1163,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Dependentes</label>
+                        <label>
+                            Dependentes
+                        </label>
+
 
                         <input
                             type="number"
@@ -801,7 +1180,9 @@ function mostrarFerias(funcionarioId = "") {
 
                     </div>
 
+
                 </div>
+
 
 
                 <div
@@ -809,16 +1190,23 @@ function mostrarFerias(funcionarioId = "") {
                     class="funcionario-selecionado"
                 ></div>
 
+
             </div>
+
 
         </div>
 
 
+
         <div class="card">
+
 
             <div class="card-cabecalho">
 
-                <h2>Remuneração</h2>
+                <h2>
+                    Remuneração
+                </h2>
+
 
                 <p>
                     Componentes utilizados no cálculo.
@@ -827,13 +1215,19 @@ function mostrarFerias(funcionarioId = "") {
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="componentes-grid">
 
+
                     <div class="componente">
 
-                        <label>Salário</label>
+                        <label>
+                            Salário
+                        </label>
+
 
                         <input
                             type="number"
@@ -847,9 +1241,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="componente">
 
-                        <label>Média de horas extras</label>
+                        <label>
+                            Média de horas extras
+                        </label>
+
 
                         <input
                             type="number"
@@ -863,9 +1261,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="componente">
 
-                        <label>Adicional noturno</label>
+                        <label>
+                            Adicional noturno
+                        </label>
+
 
                         <input
                             type="number"
@@ -879,9 +1281,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="componente">
 
-                        <label>Comissões / Prêmios</label>
+                        <label>
+                            Comissões / Prêmios
+                        </label>
+
 
                         <input
                             type="number"
@@ -895,9 +1301,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="componente">
 
-                        <label>DSR</label>
+                        <label>
+                            DSR
+                        </label>
+
 
                         <input
                             type="number"
@@ -911,9 +1321,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="componente">
 
-                        <label>Periculosidade</label>
+                        <label>
+                            Periculosidade
+                        </label>
+
 
                         <input
                             type="number"
@@ -927,9 +1341,13 @@ function mostrarFerias(funcionarioId = "") {
                     </div>
 
 
+
                     <div class="componente">
 
-                        <label>Insalubridade</label>
+                        <label>
+                            Insalubridade
+                        </label>
+
 
                         <input
                             type="number"
@@ -942,34 +1360,50 @@ function mostrarFerias(funcionarioId = "") {
 
                     </div>
 
+
                 </div>
+
 
 
                 <div class="total-bruto">
 
+
                     <div class="descricao">
+
                         Remuneração bruta de férias
+
                     </div>
+
 
                     <div
                         class="numero"
                         id="feriasBruto"
                     >
+
                         R$ 0,00
+
                     </div>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
 
+
         <div class="card">
+
 
             <div class="card-cabecalho">
 
-                <h2>Descontos</h2>
+                <h2>
+                    Descontos
+                </h2>
+
 
                 <p>
                     Informe os descontos aplicáveis.
@@ -978,28 +1412,83 @@ function mostrarFerias(funcionarioId = "") {
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="componentes-grid">
 
-                    ${campoDesconto("feriasInss", "INSS")}
-                    ${campoDesconto("feriasIrrf", "IRRF")}
-                    ${campoDesconto("feriasConsignado", "Consignado")}
-                    ${campoDesconto("feriasPensao", "Pensão")}
-                    ${campoDesconto("feriasAdiantamento", "Adiantamento")}
-                    ${campoDesconto("feriasAlimentacao", "Alimentação")}
-                    ${campoDesconto("feriasVT", "Vale-transporte")}
-                    ${campoDesconto("feriasSaude", "Plano de saúde")}
-                    ${campoDesconto("feriasDental", "Plano odontológico")}
-                    ${campoDesconto("feriasOutros", "Outros")}
+
+                    ${campoDesconto(
+                        "feriasInss",
+                        "INSS"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasIrrf",
+                        "IRRF"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasConsignado",
+                        "Consignado"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasPensao",
+                        "Pensão"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasAdiantamento",
+                        "Adiantamento"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasAlimentacao",
+                        "Alimentação"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasVT",
+                        "Vale-transporte"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasSaude",
+                        "Plano de saúde"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasDental",
+                        "Plano odontológico"
+                    )}
+
+
+                    ${campoDesconto(
+                        "feriasOutros",
+                        "Outros"
+                    )}
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
     `;
+
 
 
     if (funcionarioId) {
@@ -1011,13 +1500,20 @@ function mostrarFerias(funcionarioId = "") {
 }
 
 
-function campoDesconto(id, nome) {
+
+function campoDesconto(
+    id,
+    nome
+) {
 
     return `
 
         <div class="componente">
 
-            <label>${nome}</label>
+            <label>
+                ${nome}
+            </label>
+
 
             <input
                 type="number"
@@ -1035,18 +1531,28 @@ function campoDesconto(id, nome) {
 }
 
 
+
 function selecionarFuncionarioFerias() {
 
+
     const id =
-        document.getElementById("feriasFuncionario").value;
+        document
+            .getElementById(
+                "feriasFuncionario"
+            )
+            .value;
+
 
 
     const funcionario =
-        funcionarios.find(function(item) {
+        funcionarios.find(
+            function(item) {
 
-            return item.id === id;
+                return item.id === id;
 
-        });
+            }
+        );
+
 
 
     const area =
@@ -1055,118 +1561,202 @@ function selecionarFuncionarioFerias() {
         );
 
 
+
     if (!funcionario) {
 
-        area.classList.remove("mostrar");
+        area.classList.remove(
+            "mostrar"
+        );
 
         return;
 
     }
 
 
-    document.getElementById("feriasSalario").value =
+
+    document.getElementById(
+        "feriasSalario"
+    ).value =
         funcionario.salario || 0;
+
 
 
     area.innerHTML = `
 
+
         <strong>
-            ${escapar(funcionario.nome)}
+
+            ${escapar(
+                funcionario.nome
+            )}
+
         </strong>
+
 
         <div class="funcionario-info">
 
-            <span>
-                <strong>Matrícula:</strong>
-                ${escapar(funcionario.matricula)}
-            </span>
 
             <span>
-                <strong>CPF:</strong>
-                ${escapar(funcionario.cpf)}
+
+                <strong>
+                    Matrícula:
+                </strong>
+
+                ${escapar(
+                    funcionario.matricula
+                )}
+
             </span>
 
-            <span>
-                <strong>Cargo:</strong>
-                ${escapar(funcionario.cargo)}
-            </span>
+
 
             <span>
-                <strong>Salário:</strong>
-                ${moeda(funcionario.salario)}
+
+                <strong>
+                    CPF:
+                </strong>
+
+                ${escapar(
+                    funcionario.cpf
+                )}
+
             </span>
+
+
+
+            <span>
+
+                <strong>
+                    Cargo:
+                </strong>
+
+                ${escapar(
+                    funcionario.cargo
+                )}
+
+            </span>
+
+
+
+            <span>
+
+                <strong>
+                    Salário:
+                </strong>
+
+                ${moeda(
+                    funcionario.salario
+                )}
+
+            </span>
+
 
         </div>
 
     `;
 
 
-    area.classList.add("mostrar");
+
+    area.classList.add(
+        "mostrar"
+    );
+
 
     calcularBruto();
 
 }
 
 
-function abrirFeriasFuncionario(id) {
+
+function abrirFeriasFuncionario(
+    id
+) {
 
     mostrarFerias(id);
 
 }
 
 
+
 function calcularDireito() {
 
+
     const faltas =
-        valorCampo("feriasFaltas");
+        valorCampo(
+            "feriasFaltas"
+        );
 
 
     let direito = 30;
+
 
 
     if (faltas >= 33) {
 
         direito = 0;
 
-    } else if (faltas >= 24) {
+    }
+
+    else if (faltas >= 24) {
 
         direito = 12;
 
-    } else if (faltas >= 15) {
+    }
+
+    else if (faltas >= 15) {
 
         direito = 18;
 
-    } else if (faltas >= 6) {
+    }
+
+    else if (faltas >= 6) {
 
         direito = 24;
 
     }
 
 
+
     const campo =
-        document.getElementById("feriasDireito");
+        document.getElementById(
+            "feriasDireito"
+        );
 
 
     if (campo) {
 
-        campo.value = direito;
+        campo.value =
+            direito;
 
     }
 
 
+
     const dias =
-        document.getElementById("feriasDias");
+        document.getElementById(
+            "feriasDias"
+        );
 
 
     if (dias) {
 
-        if (Number(dias.value) > direito) {
-            dias.value = direito;
+
+        if (
+            Number(dias.value) >
+            direito
+        ) {
+
+            dias.value =
+                direito;
+
         }
 
-        dias.max = direito;
+
+        dias.max =
+            direito;
 
     }
+
 
 
     calcularBruto();
@@ -1174,35 +1764,63 @@ function calcularDireito() {
 }
 
 
+
 function calcularBruto() {
 
+
     const salario =
-        valorCampo("feriasSalario");
+        valorCampo(
+            "feriasSalario"
+        );
+
 
     const horasExtras =
-        valorCampo("feriasHorasExtras");
+        valorCampo(
+            "feriasHorasExtras"
+        );
+
 
     const noturno =
-        valorCampo("feriasNoturno");
+        valorCampo(
+            "feriasNoturno"
+        );
+
 
     const comissoes =
-        valorCampo("feriasComissoes");
+        valorCampo(
+            "feriasComissoes"
+        );
+
 
     const dsr =
-        valorCampo("feriasDsr");
+        valorCampo(
+            "feriasDsr"
+        );
+
 
     const periculosidade =
-        valorCampo("feriasPericulosidade");
+        valorCampo(
+            "feriasPericulosidade"
+        );
+
 
     const insalubridade =
-        valorCampo("feriasInsalubridade");
+        valorCampo(
+            "feriasInsalubridade"
+        );
 
 
     const dias =
-        valorCampo("feriasDias");
+        valorCampo(
+            "feriasDias"
+        );
+
 
     const vendidos =
-        valorCampo("feriasVendidos");
+        valorCampo(
+            "feriasVendidos"
+        );
+
 
 
     const base =
@@ -1216,20 +1834,27 @@ function calcularBruto() {
         insalubridade;
 
 
+
     const valorFerias =
-        (base / 30) * dias;
+        (base / 30) *
+        dias;
+
 
 
     const umTerco =
         valorFerias / 3;
 
 
+
     const valorVendidos =
-        (base / 30) * vendidos;
+        (base / 30) *
+        vendidos;
+
 
 
     const umTercoVendidos =
         valorVendidos / 3;
+
 
 
     const bruto =
@@ -1240,6 +1865,7 @@ function calcularBruto() {
         umTercoVendidos;
 
 
+
     atualizarTexto(
         "feriasBruto",
         moeda(bruto)
@@ -1248,11 +1874,13 @@ function calcularBruto() {
 }
 
 
+
 /* =========================================================
    PLANILHAS DE FUNCIONÁRIOS
 ========================================================= */
 
 function mostrarPlanilhas() {
+
 
     titulo(
         "Planilhas de funcionários",
@@ -1260,51 +1888,75 @@ function mostrarPlanilhas() {
     );
 
 
-    document.getElementById("areaConteudo").innerHTML = `
+
+    document.getElementById(
+        "areaConteudo"
+    ).innerHTML = `
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>Planilhas</h2>
+                <h2>
+                    Planilhas
+                </h2>
+
 
                 <p>
-                    Utilize a exportação para gerar uma planilha
-                    dos funcionários cadastrados.
+
+                    Utilize a exportação para gerar
+                    uma planilha dos funcionários cadastrados.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="total-bruto">
 
+
                     <div class="descricao">
+
                         Funcionários cadastrados
+
                     </div>
 
-                    <div
-                        class="numero"
-                    >
+
+                    <div class="numero">
+
                         ${funcionarios.length}
+
                     </div>
+
 
                 </div>
 
 
+
                 <div class="botoes">
+
 
                     <button
                         class="btn btn-principal"
                         onclick="exportarFuncionarios()"
                     >
+
                         Exportar funcionários
+
                     </button>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
@@ -1313,19 +1965,26 @@ function mostrarPlanilhas() {
 }
 
 
+
 /* =========================================================
    EXPORTAR FUNCIONÁRIOS
 ========================================================= */
 
 function exportarFuncionarios() {
 
-    if (funcionarios.length === 0) {
 
-        alert("Não existem funcionários cadastrados.");
+    if (
+        funcionarios.length === 0
+    ) {
+
+        alert(
+            "Não existem funcionários cadastrados."
+        );
 
         return;
 
     }
+
 
 
     const cabecalho = [
@@ -1340,20 +1999,25 @@ function exportarFuncionarios() {
     ];
 
 
-    const linhas = funcionarios.map(function(f) {
 
-        return [
+    const linhas =
+        funcionarios.map(
+            function(f) {
 
-            f.nome || "",
-            f.cpf || "",
-            f.matricula || "",
-            f.cargo || "",
-            f.salario || 0,
-            f.admissao || ""
+                return [
 
-        ];
+                    f.nome || "",
+                    f.cpf || "",
+                    f.matricula || "",
+                    f.cargo || "",
+                    f.salario || 0,
+                    f.admissao || ""
 
-    });
+                ];
+
+            }
+        );
+
 
 
     const csv = [
@@ -1361,35 +2025,63 @@ function exportarFuncionarios() {
         cabecalho,
         ...linhas
 
-    ].map(function(linha) {
+    ]
 
-        return linha.map(function(valor) {
+    .map(
+        function(linha) {
 
-            return `"${String(valor).replace(/"/g, '""')}"`;
+            return linha
 
-        }).join(";");
+                .map(
+                    function(valor) {
 
-    }).join("\n");
+                        return `"${String(valor)
+                            .replace(
+                                /"/g,
+                                '""'
+                            )}"`;
+
+                    }
+                )
+
+                .join(";");
+
+        }
+    )
+
+    .join("\n");
+
 
 
     const blob =
         new Blob(
-            ["\uFEFF" + csv],
+            [
+                "\uFEFF" + csv
+            ],
             {
-                type: "text/csv;charset=utf-8;"
+                type:
+                    "text/csv;charset=utf-8;"
             }
         );
 
 
+
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
+
 
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
 
-    link.href = url;
+    link.href =
+        url;
+
 
     link.download =
         "funcionarios_prancheta_rh.csv";
@@ -1398,9 +2090,12 @@ function exportarFuncionarios() {
     link.click();
 
 
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(
+        url
+    );
 
 }
+
 
 
 /* =========================================================
@@ -1409,55 +2104,89 @@ function exportarFuncionarios() {
 
 function mostrarConsignado() {
 
+
     titulo(
         "Empréstimo consignado",
         "Consulta e cálculo de empréstimos consignados"
     );
 
 
+
     let opcoes = `
-        <option value="">Selecione um funcionário</option>
+
+        <option value="">
+            Selecione um funcionário
+        </option>
+
     `;
 
 
-    funcionarios.forEach(function(funcionario) {
 
-        opcoes += `
+    funcionarios.forEach(
+        function(funcionario) {
 
-            <option value="${funcionario.id}">
+            opcoes += `
 
-                ${escapar(funcionario.nome)}
-                - ${escapar(funcionario.matricula)}
+                <option
+                    value="${funcionario.id}"
+                >
 
-            </option>
+                    ${escapar(
+                        funcionario.nome
+                    )}
 
-        `;
+                    -
 
-    });
+                    ${escapar(
+                        funcionario.matricula
+                    )}
+
+                </option>
+
+            `;
+
+        }
+    );
 
 
-    document.getElementById("areaConteudo").innerHTML = `
+
+    document.getElementById(
+        "areaConteudo"
+    ).innerHTML = `
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>Empréstimo consignado</h2>
+                <h2>
+                    Empréstimo consignado
+                </h2>
+
 
                 <p>
+
                     Consulta rápida dos funcionários cadastrados.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo largo">
 
-                        <label>Funcionário</label>
+                        <label>
+                            Funcionário
+                        </label>
+
 
                         <select
                             id="consignadoFuncionario"
@@ -1469,21 +2198,29 @@ function mostrarConsignado() {
 
                     </div>
 
+
                 </div>
 
 
+
                 <div class="botoes">
+
 
                     <button
                         class="btn btn-principal"
                         onclick="mostrarPlanilhaConsignado()"
                     >
+
                         Abrir planilha consignado
+
                     </button>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
@@ -1492,11 +2229,13 @@ function mostrarConsignado() {
 }
 
 
+
 /* =========================================================
    PLANILHA CONSIGNADO
 ========================================================= */
 
 function mostrarPlanilhaConsignado() {
+
 
     titulo(
         "Planilha consignado",
@@ -1504,51 +2243,87 @@ function mostrarPlanilhaConsignado() {
     );
 
 
+
     let opcoes = `
-        <option value="">Selecione um funcionário</option>
+
+        <option value="">
+            Selecione um funcionário
+        </option>
+
     `;
 
 
-    funcionarios.forEach(function(funcionario) {
 
-        opcoes += `
-
-            <option value="${funcionario.id}">
-
-                ${escapar(funcionario.nome)}
-                - Matrícula ${escapar(funcionario.matricula)}
-
-            </option>
-
-        `;
-
-    });
+    funcionarios.forEach(
+        function(funcionario) {
 
 
-    document.getElementById("areaConteudo").innerHTML = `
+            opcoes += `
+
+                <option
+                    value="${funcionario.id}"
+                >
+
+                    ${escapar(
+                        funcionario.nome
+                    )}
+
+                    -
+
+                    Matrícula
+                    ${escapar(
+                        funcionario.matricula
+                    )}
+
+                </option>
+
+            `;
+
+        }
+    );
+
+
+
+    document.getElementById(
+        "areaConteudo"
+    ).innerHTML = `
+
 
         <!-- IDENTIFICAÇÃO -->
 
+
         <div class="card">
+
 
             <div class="card-cabecalho">
 
-                <h2>1. Identificação</h2>
+                <h2>
+                    1. Identificação
+                </h2>
+
 
                 <p>
+
                     Dados do funcionário vinculado ao contrato.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo largo">
 
-                        <label>Funcionário</label>
+                        <label>
+                            Funcionário
+                        </label>
+
 
                         <select
                             id="consFuncionario"
@@ -1562,9 +2337,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>CPF</label>
+                        <label>
+                            CPF
+                        </label>
+
 
                         <input
                             type="text"
@@ -1575,9 +2354,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Matrícula</label>
+                        <label>
+                            Matrícula
+                        </label>
+
 
                         <input
                             type="text"
@@ -1588,9 +2371,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Setor</label>
+                        <label>
+                            Setor
+                        </label>
+
 
                         <input
                             type="text"
@@ -1600,36 +2387,53 @@ function mostrarPlanilhaConsignado() {
 
                     </div>
 
+
                 </div>
 
+
             </div>
+
 
         </div>
 
 
+
         <!-- BASE -->
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>2. Base para margem</h2>
+                <h2>
+                    2. Base para margem
+                </h2>
+
 
                 <p>
+
                     A base é calculada a partir do salário bruto
                     menos os descontos informados.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo">
 
-                        <label>Salário bruto contratual</label>
+                        <label>
+                            Salário bruto contratual
+                        </label>
+
 
                         <input
                             type="number"
@@ -1642,9 +2446,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>INSS</label>
+                        <label>
+                            INSS
+                        </label>
+
 
                         <input
                             type="number"
@@ -1658,9 +2466,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>IRRF</label>
+                        <label>
+                            IRRF
+                        </label>
+
 
                         <input
                             type="number"
@@ -1674,9 +2486,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Salário líquido de base</label>
+                        <label>
+                            Salário líquido de base
+                        </label>
+
 
                         <input
                             type="text"
@@ -1686,35 +2502,52 @@ function mostrarPlanilhaConsignado() {
 
                     </div>
 
+
                 </div>
 
+
             </div>
+
 
         </div>
 
 
+
         <!-- MARGEM -->
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>3. Margem consignável</h2>
+                <h2>
+                    3. Margem consignável
+                </h2>
+
 
                 <p>
+
                     Percentual configurável para validação interna.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo">
 
-                        <label>Percentual de margem</label>
+                        <label>
+                            Percentual de margem
+                        </label>
+
 
                         <input
                             type="number"
@@ -1729,9 +2562,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Limite máximo da margem</label>
+                        <label>
+                            Limite máximo da margem
+                        </label>
+
 
                         <input
                             type="text"
@@ -1742,9 +2579,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Parcelas ativas antes deste contrato</label>
+                        <label>
+                            Parcelas ativas antes deste contrato
+                        </label>
+
 
                         <input
                             type="number"
@@ -1758,9 +2599,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Margem disponível antes do contrato</label>
+                        <label>
+                            Margem disponível antes do contrato
+                        </label>
+
 
                         <input
                             type="text"
@@ -1770,43 +2615,63 @@ function mostrarPlanilhaConsignado() {
 
                     </div>
 
+
                 </div>
+
 
 
                 <div
                     id="consStatusMargem"
                     class="status-consignado status-info"
                 >
+
                     Informe os valores para validar a margem.
+
                 </div>
 
+
             </div>
+
 
         </div>
 
 
+
         <!-- CONTRATO -->
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>4. Contrato</h2>
+                <h2>
+                    4. Contrato
+                </h2>
+
 
                 <p>
+
                     Dados do empréstimo consignado.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo">
 
-                        <label>Instituição financeira</label>
+                        <label>
+                            Instituição financeira
+                        </label>
+
 
                         <input
                             type="text"
@@ -1817,9 +2682,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Número do contrato</label>
+                        <label>
+                            Número do contrato
+                        </label>
+
 
                         <input
                             type="text"
@@ -1830,9 +2699,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Valor total contratado</label>
+                        <label>
+                            Valor total contratado
+                        </label>
+
 
                         <input
                             type="number"
@@ -1845,9 +2718,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Parcela mensal deste contrato</label>
+                        <label>
+                            Parcela mensal deste contrato
+                        </label>
+
 
                         <input
                             type="number"
@@ -1860,35 +2737,52 @@ function mostrarPlanilhaConsignado() {
 
                     </div>
 
+
                 </div>
 
+
             </div>
+
 
         </div>
 
 
+
         <!-- STATUS -->
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>5. Status do contrato</h2>
+                <h2>
+                    5. Status do contrato
+                </h2>
+
 
                 <p>
+
                     Controle das parcelas e do saldo devedor.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo">
 
-                        <label>Total de parcelas</label>
+                        <label>
+                            Total de parcelas
+                        </label>
+
 
                         <input
                             type="number"
@@ -1902,9 +2796,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Parcelas quitadas</label>
+                        <label>
+                            Parcelas quitadas
+                        </label>
+
 
                         <input
                             type="number"
@@ -1918,9 +2816,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Parcelas restantes</label>
+                        <label>
+                            Parcelas restantes
+                        </label>
+
 
                         <input
                             type="number"
@@ -1931,9 +2833,13 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Saldo devedor atualizado</label>
+                        <label>
+                            Saldo devedor atualizado
+                        </label>
+
 
                         <input
                             type="number"
@@ -1945,35 +2851,52 @@ function mostrarPlanilhaConsignado() {
 
                     </div>
 
+
                 </div>
 
+
             </div>
+
 
         </div>
 
 
-        <!-- CONTROLE RH -->
+
+        <!-- CONTROLE -->
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>6. Controle RH / DP</h2>
+                <h2>
+                    6. Controle RH / DP
+                </h2>
+
 
                 <p>
+
                     Validações para folha, férias e rescisão.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
+
 
                 <div class="form-grid">
 
+
                     <div class="form-grupo">
 
-                        <label>Última atualização</label>
+                        <label>
+                            Última atualização
+                        </label>
+
 
                         <input
                             type="date"
@@ -1984,19 +2907,27 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Validação para férias</label>
+                        <label>
+                            Validação para férias
+                        </label>
 
-                        <select id="consFerias">
+
+                        <select
+                            id="consFerias"
+                        >
 
                             <option value="Pendente">
                                 Pendente
                             </option>
 
+
                             <option value="Validado">
                                 Validado
                             </option>
+
 
                             <option value="Não se aplica">
                                 Não se aplica
@@ -2007,19 +2938,27 @@ function mostrarPlanilhaConsignado() {
                     </div>
 
 
+
                     <div class="form-grupo">
 
-                        <label>Validação para rescisão</label>
+                        <label>
+                            Validação para rescisão
+                        </label>
 
-                        <select id="consRescisao">
+
+                        <select
+                            id="consRescisao"
+                        >
 
                             <option value="Pendente">
                                 Pendente
                             </option>
 
+
                             <option value="Validado">
                                 Validado
                             </option>
+
 
                             <option value="Não se aplica">
                                 Não se aplica
@@ -2028,11 +2967,15 @@ function mostrarPlanilhaConsignado() {
                         </select>
 
                     </div>
+
 
 
                     <div class="form-grupo largo">
 
-                        <label>Observações</label>
+                        <label>
+                            Observações
+                        </label>
+
 
                         <input
                             type="text"
@@ -2042,57 +2985,83 @@ function mostrarPlanilhaConsignado() {
 
                     </div>
 
+
                 </div>
 
 
+
                 <div class="botoes">
+
 
                     <button
                         class="btn btn-principal"
                         onclick="salvarConsignado()"
                     >
+
                         Salvar registro
+
                     </button>
+
+
 
                     <button
                         class="btn btn-secundario"
                         onclick="mostrarPlanilhaConsignado()"
                     >
+
                         Limpar
+
                     </button>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
 
-        <!-- PLANILHA -->
+
+        <!-- REGISTROS -->
+
 
         <div class="card">
 
+
             <div class="card-cabecalho">
 
-                <h2>7. Registros de consignado</h2>
+                <h2>
+                    7. Registros de consignado
+                </h2>
+
 
                 <p>
+
                     Controle geral dos contratos cadastrados.
+
                 </p>
 
             </div>
 
 
+
             <div class="card-corpo">
 
+
                 <div class="botoes">
+
 
                     <button
                         class="btn btn-principal"
                         onclick="exportarConsignados()"
                     >
+
                         Exportar planilha
+
                     </button>
+
 
                 </div>
 
@@ -2102,39 +3071,75 @@ function mostrarPlanilhaConsignado() {
 
                 <div class="tabela-container">
 
+
                     <table>
+
 
                         <thead>
 
                             <tr>
 
-                                <th>Funcionário</th>
-                                <th>Instituição</th>
-                                <th>Contrato</th>
-                                <th>Parcela</th>
-                                <th>Margem disponível</th>
-                                <th>Saldo devedor</th>
-                                <th>Status</th>
-                                <th>Atualização</th>
-                                <th>Ações</th>
+                                <th>
+                                    Funcionário
+                                </th>
+
+                                <th>
+                                    Instituição
+                                </th>
+
+                                <th>
+                                    Contrato
+                                </th>
+
+                                <th>
+                                    Parcela
+                                </th>
+
+                                <th>
+                                    Margem disponível
+                                </th>
+
+                                <th>
+                                    Saldo devedor
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Atualização
+                                </th>
+
+                                <th>
+                                    Ações
+                                </th>
 
                             </tr>
 
                         </thead>
 
-                        <tbody id="tabelaConsignados">
+
+                        <tbody
+                            id="tabelaConsignados"
+                        >
 
                         </tbody>
 
+
                     </table>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
     `;
+
 
 
     atualizarTabelaConsignados();
@@ -2142,52 +3147,86 @@ function mostrarPlanilhaConsignado() {
 }
 
 
+
 /* =========================================================
-   PREENCHER FUNCIONÁRIO NO CONSIGNADO
+   PREENCHER FUNCIONÁRIO
 ========================================================= */
 
 function preencherConsignadoFuncionario() {
 
+
     const id =
-        document.getElementById("consFuncionario").value;
+        document
+            .getElementById(
+                "consFuncionario"
+            )
+            .value;
+
 
 
     const funcionario =
-        funcionarios.find(function(item) {
+        funcionarios.find(
+            function(item) {
 
-            return item.id === id;
+                return item.id === id;
 
-        });
+            }
+        );
+
 
 
     if (!funcionario) {
 
-        document.getElementById("consCpf").value = "";
-        document.getElementById("consMatricula").value = "";
-        document.getElementById("consSalarioBruto").value = "";
+
+        document.getElementById(
+            "consCpf"
+        ).value = "";
+
+
+        document.getElementById(
+            "consMatricula"
+        ).value = "";
+
+
+        document.getElementById(
+            "consSalarioBruto"
+        ).value = "";
+
 
         calcularMargemConsignado();
+
 
         return;
 
     }
 
 
-    document.getElementById("consCpf").value =
+
+    document.getElementById(
+        "consCpf"
+    ).value =
         funcionario.cpf || "";
 
 
-    document.getElementById("consMatricula").value =
+
+    document.getElementById(
+        "consMatricula"
+    ).value =
         funcionario.matricula || "";
 
 
-    document.getElementById("consSalarioBruto").value =
+
+    document.getElementById(
+        "consSalarioBruto"
+    ).value =
         funcionario.salario || 0;
+
 
 
     calcularMargemConsignado();
 
 }
+
 
 
 /* =========================================================
@@ -2196,23 +3235,42 @@ function preencherConsignadoFuncionario() {
 
 function calcularMargemConsignado() {
 
+
     const bruto =
-        valorCampo("consSalarioBruto");
+        valorCampo(
+            "consSalarioBruto"
+        );
+
 
     const inss =
-        valorCampo("consInss");
+        valorCampo(
+            "consInss"
+        );
+
 
     const irrf =
-        valorCampo("consIrrf");
+        valorCampo(
+            "consIrrf"
+        );
+
 
     const percentual =
-        valorCampo("consPercentual");
+        valorCampo(
+            "consPercentual"
+        );
+
 
     const parcelasAtivas =
-        valorCampo("consParcelasAtivas");
+        valorCampo(
+            "consParcelasAtivas"
+        );
+
 
     const parcelaNova =
-        valorCampo("consParcela");
+        valorCampo(
+            "consParcela"
+        );
+
 
 
     const liquido =
@@ -2222,782 +3280,44 @@ function calcularMargemConsignado() {
         );
 
 
+
     const margemMaxima =
-        liquido * (percentual / 100);
+        liquido *
+        (percentual / 100);
+
 
 
     const margemDisponivel =
-        margemMaxima - parcelasAtivas;
+        margemMaxima -
+        parcelasAtivas;
+
 
 
     const totalComNovoContrato =
-        parcelasAtivas + parcelaNova;
+        parcelasAtivas +
+        parcelaNova;
+
 
 
     const margemDepoisNovoContrato =
-        margemMaxima - totalComNovoContrato;
+        margemMaxima -
+        totalComNovoContrato;
+
 
 
     const campoLiquido =
-        document.getElementById("consLiquido");
+        document.getElementById(
+            "consLiquido"
+        );
+
 
 
     const campoMargemMaxima =
-        document.getElementById("consMargemMaxima");
+        document.getElementById(
+            "consMargemMaxima"
+        );
+
 
 
     const campoMargemDisponivel =
-        document.getElementById("consMargemDisponivel");
-
-
-    if (campoLiquido) {
-
-        campoLiquido.value =
-            moeda(liquido);
-
-    }
-
-
-    if (campoMargemMaxima) {
-
-        campoMargemMaxima.value =
-            moeda(margemMaxima);
-
-    }
-
-
-    if (campoMargemDisponivel) {
-
-        campoMargemDisponivel.value =
-            moeda(Math.max(margemDisponivel, 0));
-
-    }
-
-
-    const status =
-        document.getElementById("consStatusMargem");
-
-
-    if (!status) {
-        return;
-    }
-
-
-    status.classList.remove(
-        "status-info",
-        "status-regular",
-        "status-alerta"
-    );
-
-
-    if (
-        bruto <= 0 ||
-        percentual <= 0
-    ) {
-
-        status.classList.add("status-info");
-
-        status.innerHTML =
-            "Informe salário e percentual de margem para realizar a validação.";
-
-        return;
-
-    }
-
-
-    if (totalComNovoContrato <= margemMaxima) {
-
-        status.classList.add("status-regular");
-
-        status.innerHTML = `
-
-            <strong>MARGEM REGULAR</strong><br>
-
-            Margem máxima:
-            ${moeda(margemMaxima)}
-            &nbsp; | &nbsp;
-
-            Margem disponível antes do contrato:
-            ${moeda(Math.max(margemDisponivel, 0))}
-            &nbsp; | &nbsp;
-
-            Margem após o novo contrato:
-            ${moeda(Math.max(margemDepoisNovoContrato, 0))}
-
-        `;
-
-    } else {
-
-        status.classList.add("status-alerta");
-
-        status.innerHTML = `
-
-            <strong>MARGEM EXCEDIDA</strong><br>
-
-            O total das parcelas após este contrato seria
-            ${moeda(totalComNovoContrato)},
-            acima do limite calculado de
-            ${moeda(margemMaxima)}.
-
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   PARCELAS RESTANTES
-========================================================= */
-
-function calcularParcelasRestantes() {
-
-    const total =
-        valorCampo("consTotalParcelas");
-
-    const quitadas =
-        valorCampo("consParcelasQuitadas");
-
-
-    const restantes =
-        Math.max(
-            total - quitadas,
-            0
-        );
-
-
-    const campo =
-        document.getElementById(
-            "consParcelasRestantes"
-        );
-
-
-    if (campo) {
-
-        campo.value = restantes;
-
-    }
-
-}
-
-
-/* =========================================================
-   SALVAR CONSIGNADO
-========================================================= */
-
-function salvarConsignado() {
-
-    const funcionarioId =
-        document.getElementById("consFuncionario").value;
-
-
-    if (!funcionarioId) {
-
-        alert("Selecione um funcionário.");
-
-        return;
-
-    }
-
-
-    const funcionario =
-        funcionarios.find(function(item) {
-
-            return item.id === funcionarioId;
-
-        });
-
-
-    if (!funcionario) {
-
-        alert("Funcionário não encontrado.");
-
-        return;
-
-    }
-
-
-    calcularMargemConsignado();
-
-    calcularParcelasRestantes();
-
-
-    const salarioBruto =
-        valorCampo("consSalarioBruto");
-
-    const inss =
-        valorCampo("consInss");
-
-    const irrf =
-        valorCampo("consIrrf");
-
-    const percentual =
-        valorCampo("consPercentual");
-
-    const parcelasAtivas =
-        valorCampo("consParcelasAtivas");
-
-    const parcela =
-        valorCampo("consParcela");
-
-
-    const liquido =
-        Math.max(
-            salarioBruto - inss - irrf,
-            0
-        );
-
-
-    const margemMaxima =
-        liquido * (percentual / 100);
-
-
-    const margemDisponivel =
-        Math.max(
-            margemMaxima - parcelasAtivas,
-            0
-        );
-
-
-    const totalParcelasAtivas =
-        parcelasAtivas + parcela;
-
-
-    const status =
-        totalParcelasAtivas <= margemMaxima
-            ? "REGULAR"
-            : "MARGEM EXCEDIDA";
-
-
-    const registro = {
-
-        id:
-            "CON-" +
-            Date.now() +
-            "-" +
-            Math.random()
-                .toString(36)
-                .substring(2, 8),
-
-        funcionarioId:
-
-            funcionarioId,
-
-        nome:
-
-            funcionario.nome,
-
-        cpf:
-
-            funcionario.cpf || "",
-
-        matricula:
-
-            funcionario.matricula || "",
-
-        setor:
-
-            document.getElementById("consSetor").value.trim(),
-
-        salarioBruto:
-
-            salarioBruto,
-
-        inss:
-
-            inss,
-
-        irrf:
-
-            irrf,
-
-        salarioLiquidoBase:
-
-            liquido,
-
-        percentualMargem:
-
-            percentual,
-
-        margemMaxima:
-
-            margemMaxima,
-
-        parcelasAtivasAntes:
-
-            parcelasAtivas,
-
-        parcelaMensal:
-
-            parcela,
-
-        totalParcelasAtivas:
-
-            totalParcelasAtivas,
-
-        margemDisponivel:
-
-            margemDisponivel,
-
-        instituicao:
-
-            document.getElementById("consInstituicao").value.trim(),
-
-        contrato:
-
-            document.getElementById("consContrato").value.trim(),
-
-        valorContratado:
-
-            valorCampo("consValorContratado"),
-
-        totalParcelas:
-
-            valorCampo("consTotalParcelas"),
-
-        parcelasQuitadas:
-
-            valorCampo("consParcelasQuitadas"),
-
-        parcelasRestantes:
-
-            valorCampo("consParcelasRestantes"),
-
-        saldoDevedor:
-
-            valorCampo("consSaldoDevedor"),
-
-        status:
-
-            status,
-
-        ultimaAtualizacao:
-
-            document.getElementById("consAtualizacao").value,
-
-        validacaoFerias:
-
-            document.getElementById("consFerias").value,
-
-        validacaoRescisao:
-
-            document.getElementById("consRescisao").value,
-
-        observacoes:
-
-            document.getElementById("consObservacoes").value.trim()
-
-    };
-
-
-    consignados.push(registro);
-
-    salvarConsignados();
-
-
-    alert("Registro de consignado salvo com sucesso.");
-
-
-    mostrarPlanilhaConsignado();
-
-}
-
-
-/* =========================================================
-   TABELA DE CONSIGNADOS
-========================================================= */
-
-function atualizarTabelaConsignados() {
-
-    const tabela =
-        document.getElementById(
-            "tabelaConsignados"
-        );
-
-
-    if (!tabela) {
-        return;
-    }
-
-
-    if (consignados.length === 0) {
-
-        tabela.innerHTML = `
-
-            <tr>
-
-                <td colspan="9">
-
-                    Nenhum contrato consignado cadastrado.
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    tabela.innerHTML =
-        consignados.map(function(registro) {
-
-            const classe =
-                registro.status === "MARGEM EXCEDIDA"
-                    ? "linha-alerta"
-                    : "";
-
-
-            const funcionario =
-                funcionarios.find(function(item) {
-
-                    return item.id === registro.funcionarioId;
-
-                });
-
-
-            const nome =
-                funcionario
-                    ? funcionario.nome
-                    : registro.nome;
-
-
-            const statusClasse =
-                registro.status === "MARGEM EXCEDIDA"
-                    ? "status-mini alerta"
-                    : "status-mini regular";
-
-
-            return `
-
-                <tr class="${classe}">
-
-                    <td>
-
-                        ${escapar(nome)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapar(
-                            registro.instituicao
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapar(
-                            registro.contrato
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        ${moeda(
-                            registro.parcelaMensal
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        ${moeda(
-                            registro.margemDisponivel
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        ${moeda(
-                            registro.saldoDevedor
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        <span class="${statusClasse}">
-
-                            ${escapar(
-                                registro.status
-                            )}
-
-                        </span>
-
-                    </td>
-
-
-                    <td>
-
-                        ${formatarData(
-                            registro.ultimaAtualizacao
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        <button
-                            class="btn btn-secundario"
-                            onclick="excluirConsignado('${registro.id}')"
-                        >
-                            Excluir
-                        </button>
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        }).join("");
-
-}
-
-
-/* =========================================================
-   EXCLUIR CONSIGNADO
-========================================================= */
-
-function excluirConsignado(id) {
-
-    const registro =
-        consignados.find(function(item) {
-
-            return item.id === id;
-
-        });
-
-
-    if (!registro) {
-        return;
-    }
-
-
-    const confirmar =
-        confirm(
-            "Deseja realmente excluir este registro de consignado?"
-        );
-
-
-    if (!confirmar) {
-        return;
-    }
-
-
-    consignados =
-        consignados.filter(function(item) {
-
-            return item.id !== id;
-
-        });
-
-
-    salvarConsignados();
-
-    atualizarTabelaConsignados();
-
-}
-
-
-/* =========================================================
-   EXPORTAR CONSIGNADOS
-========================================================= */
-
-function exportarConsignados() {
-
-    if (consignados.length === 0) {
-
-        alert(
-            "Não existem registros de consignado para exportar."
-        );
-
-        return;
-
-    }
-
-
-    const cabecalho = [
-
-        "Nome",
-        "CPF",
-        "Matrícula",
-        "Setor",
-        "Salário bruto",
-        "INSS",
-        "IRRF",
-        "Salário líquido base",
-        "% margem",
-        "Margem máxima",
-        "Parcelas ativas antes",
-        "Parcela mensal",
-        "Total parcelas ativas",
-        "Margem disponível",
-        "Instituição",
-        "Contrato",
-        "Valor contratado",
-        "Total parcelas",
-        "Parcelas quitadas",
-        "Parcelas restantes",
-        "Saldo devedor",
-        "Status",
-        "Última atualização",
-        "Validação férias",
-        "Validação rescisão",
-        "Observações"
-
-    ];
-
-
-    const linhas =
-        consignados.map(function(r) {
-
-            return [
-
-                r.nome || "",
-                r.cpf || "",
-                r.matricula || "",
-                r.setor || "",
-                r.salarioBruto || 0,
-                r.inss || 0,
-                r.irrf || 0,
-                r.salarioLiquidoBase || 0,
-                r.percentualMargem || 0,
-                r.margemMaxima || 0,
-                r.parcelasAtivasAntes || 0,
-                r.parcelaMensal || 0,
-                r.totalParcelasAtivas || 0,
-                r.margemDisponivel || 0,
-                r.instituicao || "",
-                r.contrato || "",
-                r.valorContratado || 0,
-                r.totalParcelas || 0,
-                r.parcelasQuitadas || 0,
-                r.parcelasRestantes || 0,
-                r.saldoDevedor || 0,
-                r.status || "",
-                r.ultimaAtualizacao || "",
-                r.validacaoFerias || "",
-                r.validacaoRescisao || "",
-                r.observacoes || ""
-
-            ];
-
-        });
-
-
-    const csv = [
-
-        cabecalho,
-        ...linhas
-
-    ].map(function(linha) {
-
-        return linha.map(function(valor) {
-
-            return `"${String(valor).replace(/"/g, '""')}"`;
-
-        }).join(";");
-
-    }).join("\n");
-
-
-    const blob =
-        new Blob(
-            ["\uFEFF" + csv],
-            {
-                type: "text/csv;charset=utf-8;"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(blob);
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href = url;
-
-    link.download =
-        "planilha_consignado_prancheta_rh.csv";
-
-
-    link.click();
-
-
-    URL.revokeObjectURL(url);
-
-}
-
-
-/* =========================================================
-   FOLHA DE PAGAMENTO
-========================================================= */
-
-function mostrarFolha() {
-
-    titulo(
-        "Folha de pagamento",
-        "Cálculo e controle da folha de pagamento"
-    );
-
-
-    document.getElementById("areaConteudo").innerHTML = `
-
-        <div class="card">
-
-            <div class="card-cabecalho">
-
-                <h2>Folha de pagamento</h2>
-
-                <p>
-                    Módulo em desenvolvimento.
-                </p>
-
-            </div>
-
-
-            <div class="card-corpo">
-
-                <p>
-                    O módulo de folha de pagamento será
-                    desenvolvido nesta área.
-                </p>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        mostrarFerias();
-
-    }
-);
+       
