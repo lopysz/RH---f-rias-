@@ -13,6 +13,10 @@
 
 <div class="app">
 
+    <!-- =========================
+         MENU LATERAL
+    ========================== -->
+
     <aside class="sidebar">
 
         <div class="logo">
@@ -26,35 +30,66 @@
                 CÁLCULOS
             </div>
 
-            <button class="menu-item ativo" data-pagina="ferias">
+            <button
+                class="menu-item ativo"
+                onclick="abrirPagina('ferias', this)"
+            >
                 Férias
             </button>
 
-            <button class="menu-item" data-pagina="consignado">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('consignado', this)"
+            >
                 Empréstimo consignado
             </button>
 
-            <button class="menu-item" data-pagina="folha">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('folha', this)"
+            >
                 Folha de pagamento
             </button>
+
 
             <div class="menu-titulo espacamento">
                 MATRÍCULA
             </div>
 
-            <button class="menu-item" data-pagina="cadastrar">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('cadastrar', this)"
+            >
                 Cadastrar funcionário
             </button>
 
-            <button class="menu-item" data-pagina="funcionarios">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('funcionarios', this)"
+            >
                 Funcionários
             </button>
 
-            <button class="menu-item" data-pagina="planilhas">
+            <button
+                class="menu-item"
+                onclick="abrirPagina('planilhas', this)"
+            >
                 Planilhas de funcionários
             </button>
 
-            <button class="menu-item" id="btnExportar">
+            <!-- NOVA OPÇÃO -->
+
+            <button
+                class="menu-item"
+                onclick="abrirPagina('planilhaConsignado', this)"
+            >
+                Planilha consignado
+            </button>
+
+            <button
+                class="menu-item"
+                onclick="exportarFuncionarios()"
+            >
                 Exportar funcionários
             </button>
 
@@ -66,6 +101,11 @@
         </div>
 
     </aside>
+
+
+    <!-- =========================
+         ÁREA PRINCIPAL
+    ========================== -->
 
     <main class="conteudo">
 
@@ -81,13 +121,15 @@
 
         </header>
 
+
         <section id="areaConteudo"></section>
 
     </main>
 
 </div>
 
-<script src="./script.js"></script>
+
+<script src="script.js"></script>
 
 </body>
 </html>
