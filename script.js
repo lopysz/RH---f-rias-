@@ -5280,8 +5280,14 @@ botoesMenu.forEach(function (item) {
     }
 });
 
-if (botaoCalculos && botaoCalculos.parentElement) {
-    botaoCalculos.insertAdjacentElement("afterend", botao);
+if (botaoCalculos) {
+    const grupoMenu = botaoCalculos.parentElement;
+
+    if (grupoMenu) {
+        grupoMenu.insertAdjacentElement("afterend", botao);
+    } else {
+        navegacao.appendChild(botao);
+    }
 } else {
     navegacao.appendChild(botao);
 }
