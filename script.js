@@ -5227,304 +5227,404 @@ document.addEventListener(
         return document.getElementById(id);
     }
 
+    ```js
+/* =========================================================
+   PRANCHETA RH — FERRAMENTAS
+   Calendário, calculadora e bloco de notas
+========================================================= */
+
+(function () {
+    "use strict";
+
+    const CHAVE_NOTAS = "pranchetaNotas";
+
+    let dataCalendario = new Date();
+    let ferramentasCriadas = false;
+    let eventosConfigurados = false;
+
+    function elemento(id) {
+        return document.getElementById(id);
+    }
+
     /* =====================================================
-       CRIAÇÃO DA ÁREA DE FERRAMENTAS
+       CRIAR A PÁGINA DE FERRAMENTAS
     ===================================================== */
 
     function criarAbaFerramentas() {
-        if (elemento("paginaFerramentas")) return;
+        if (elemento("paginaFerramentas")) {
+            ferramentasCriadas = true;
+            return;
+        }
 
-        const conteudo = elemento("areaConteudo");
+        const principal = document.querySelector("main.conteudo");
 
-        if (!conteudo) {
-            console.error("Prancheta RH: área de conteúdo não encontrada.");
+        if (!principal) {
+            console.error(
+                "Prancheta RH: elemento main.conteudo não encontrado."
+            );
             return;
         }
 
         const pagina = document.createElement("section");
+
         pagina.id = "paginaFerramentas";
         pagina.style.display = "none";
 
         pagina.innerHTML = `
-            <div class="ferramentas-cabecalho">
-                <h2>Ferramentas</h2>
-                <p>Utilitários do Prancheta RH</p>
-            </div>
+            <div class="ferramentas-container">
 
-            <div id="ferramentaCalendario" class="ferramenta-painel">
-                <div class="ferramenta-cartao">
-                    <div class="calendario-topo">
-                        <button type="button" id="calendarioAnterior">‹</button>
-                        <h3 id="calendarioTitulo"></h3>
-                        <button type="button" id="calendarioProximo">›</button>
+                <section id="ferramentaCalendario"
+                         class="ferramenta-painel">
+
+                    <div class="ferramenta-cabecalho">
+                        <h2>Calendário</h2>
+                        <p>Consulte datas e organize seus compromissos.</p>
                     </div>
 
-                    <div id="calendarioGrade" class="calendario-grade"></div>
+                    <div class="calendario-card">
 
-                    <p id="calendarioSelecionado"></p>
+                        <div class="calendario-controles">
+                            <button type="button"
+                                    id="calendarioAnterior"
+                                    aria-label="Mês anterior">
+                                &#8592;
+                            </button>
 
-                    <button type="button" id="calendarioHoje">
-                        Ir para hoje
-                    </button>
-                </div>
-            </div>
+                            <h3 id="calendarioMesAno"></h3>
 
-            <div id="ferramentaCalculadora" class="ferramenta-painel"
-                style="display:none">
-                <div class="ferramenta-cartao calculadora-cartao">
-                    <h3>Calculadora</h3>
+                            <button type="button"
+                                    id="calendarioProximo"
+                                    aria-label="Próximo mês">
+                                &#8594;
+                            </button>
+                        </div>
 
-                    <input id="calculadoraVisor" type="text"
-                        value="0" readonly aria-label="Resultado">
+                        <div class="calendario-semana">
+                            <span>Dom</span>
+                            <span>Seg</span>
+                            <span>Ter</span>
+                            <span>Qua</span>
+                            <span>Qui</span>
+                            <span>Sex</span>
+                            <span>Sáb</span>
+                        </div>
 
-                    <div class="calculadora-grade">
-                        <button type="button" data-calc="limpar">C</button>
-                        <button type="button" data-calc="apagar">⌫</button>
-                        <button type="button" data-calc="operador" data-valor="/">÷</button>
-                        <button type="button" data-calc="operador" data-valor="*">×</button>
+                        <div id="calendarioDias"
+                             class="calendario-dias"></div>
 
-                        <button type="button" data-calc="numero" data-valor="7">7</button>
-                        <button type="button" data-calc="numero" data-valor="8">8</button>
-                        <button type="button" data-calc="numero" data-valor="9">9</button>
-                        <button type="button" data-calc="operador" data-valor="-">−</button>
-
-                        <button type="button" data-calc="numero" data-valor="4">4</button>
-                        <button type="button" data-calc="numero" data-valor="5">5</button>
-                        <button type="button" data-calc="numero" data-valor="6">6</button>
-                        <button type="button" data-calc="operador" data-valor="+">+</button>
-
-                        <button type="button" data-calc="numero" data-valor="1">1</button>
-                        <button type="button" data-calc="numero" data-valor="2">2</button>
-                        <button type="button" data-calc="numero" data-valor="3">3</button>
-                        <button type="button" data-calc="igual">=</button>
-
-                        <button type="button" data-calc="sinal">+/−</button>
-                        <button type="button" data-calc="numero" data-valor="0">0</button>
-                        <button type="button" data-calc="decimal">,</button>
+                        <p id="calendarioDataSelecionada"
+                           class="calendario-selecionada">
+                            Selecione uma data.
+                        </p>
                     </div>
-                </div>
-            </div>
+                </section>
 
-            <div id="ferramentaNotas" class="ferramenta-painel"
-                style="display:none">
-                <div class="ferramenta-cartao">
-                    <h3>Bloco de notas</h3>
-                    <p>As anotações são salvas neste navegador.</p>
+                <section id="ferramentaCalculadora"
+                         class="ferramenta-painel"
+                         style="display:none">
 
-                    <textarea id="ferramentasNotasTexto"
-                        rows="14"
-                        placeholder="Escreva seus lembretes aqui..."></textarea>
+                    <div class="ferramenta-cabecalho">
+                        <h2>Calculadora</h2>
+                        <p>Realize cálculos rápidos.</p>
+                    </div>
 
-                    <p id="notasStatus" aria-live="polite">
-                        As notas são salvas automaticamente.
-                    </p>
+                    <div class="calculadora">
+                        <input
+                            type="text"
+                            id="calculadoraVisor"
+                            value="0"
+                            readonly
+                            aria-label="Visor da calculadora"
+                        >
 
-                    <button type="button" id="limparNotas">
-                        Limpar notas
-                    </button>
-                </div>
+                        <div class="calculadora-botoes">
+                            <button type="button" data-calc="limpar"
+                                    class="calc-operacao">C</button>
+                            <button type="button" data-calc="apagar"
+                                    class="calc-operacao">⌫</button>
+                            <button type="button" data-calc="%"
+                                    class="calc-operacao">%</button>
+                            <button type="button" data-calc="/"
+                                    class="calc-operacao">÷</button>
+
+                            <button type="button" data-calc="7">7</button>
+                            <button type="button" data-calc="8">8</button>
+                            <button type="button" data-calc="9">9</button>
+                            <button type="button" data-calc="*"
+                                    class="calc-operacao">×</button>
+
+                            <button type="button" data-calc="4">4</button>
+                            <button type="button" data-calc="5">5</button>
+                            <button type="button" data-calc="6">6</button>
+                            <button type="button" data-calc="-"
+                                    class="calc-operacao">−</button>
+
+                            <button type="button" data-calc="1">1</button>
+                            <button type="button" data-calc="2">2</button>
+                            <button type="button" data-calc="3">3</button>
+                            <button type="button" data-calc="+"
+                                    class="calc-operacao">+</button>
+
+                            <button type="button" data-calc="sinal">±</button>
+                            <button type="button" data-calc="0">0</button>
+                            <button type="button" data-calc=".">,</button>
+                            <button type="button" data-calc="="
+                                    class="calc-igual">=</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="ferramentaNotas"
+                         class="ferramenta-painel"
+                         style="display:none">
+
+                    <div class="ferramenta-cabecalho">
+                        <h2>Bloco de notas</h2>
+                        <p>Escreva lembretes e informações temporárias.</p>
+                    </div>
+
+                    <div class="notas-card">
+                        <label for="blocoNotasTexto">Suas anotações</label>
+
+                        <textarea
+                            id="blocoNotasTexto"
+                            rows="14"
+                            placeholder="Digite suas anotações aqui..."
+                        ></textarea>
+
+                        <div class="notas-acoes">
+                            <span id="blocoNotasStatus">
+                                As anotações são salvas neste navegador.
+                            </span>
+
+                            <button type="button"
+                                    id="blocoNotasLimpar">
+                                Limpar anotações
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         `;
 
-        conteudo.appendChild(pagina);
+        principal.appendChild(pagina);
 
         adicionarEstilos();
         configurarCalendario();
         configurarNotas();
         configurarCalculadora();
+
+        ferramentasCriadas = true;
+
         mostrarCalendario();
     }
 
     /* =====================================================
-       ABRIR CADA FERRAMENTA PELOS BOTÕES DO MENU
+       ABRIR FERRAMENTAS
     ===================================================== */
 
-    function abrirAbaFerramentas(nome) {
+    window.abrirAbaFerramentas = function (nome) {
         criarAbaFerramentas();
 
         const pagina = elemento("paginaFerramentas");
         const conteudo = elemento("areaConteudo");
 
-        if (!pagina || !conteudo) return;
+        if (!pagina || !conteudo) {
+            console.error(
+                "Prancheta RH: não foi possível abrir as Ferramentas."
+            );
+            return;
+        }
 
-        /*
-         * Oculta o conteúdo principal atual e mostra a área
-         * das ferramentas dentro da mesma área de conteúdo.
-         */
-        Array.from(conteudo.children).forEach(function (item) {
-            if (item.id !== "paginaFerramentas") {
-                item.style.display = "none";
-            }
-        });
-
-        pagina.style.display = "block";
-
-        const nomes = {
+        const paineis = {
             calendario: "ferramentaCalendario",
             calculadora: "ferramentaCalculadora",
             notas: "ferramentaNotas"
         };
 
-        const destino = nomes[nome] || nomes.calendario;
+        const selecionada = paineis[nome] ? nome : "calendario";
 
-        Object.values(nomes).forEach(function (id) {
+        conteudo.style.display = "none";
+        pagina.style.display = "block";
+
+        Object.entries(paineis).forEach(([chave, id]) => {
             const painel = elemento(id);
+
             if (painel) {
-                painel.style.display = id === destino ? "block" : "none";
+                painel.style.display =
+                    chave === selecionada ? "block" : "none";
             }
         });
 
-        document.querySelectorAll(".menu-item").forEach(function (botao) {
+        document.querySelectorAll(".menu-item").forEach(botao => {
             botao.classList.remove("ativo");
         });
 
-        const idsBotoes = {
+        const botoes = {
             calendario: "btnFerramentaCalendario",
             calculadora: "btnFerramentaCalculadora",
             notas: "btnFerramentaNotas"
         };
 
-        const botaoAtivo = elemento(idsBotoes[nome]);
+        const botaoAtivo = elemento(botoes[selecionada]);
+
         if (botaoAtivo) {
             botaoAtivo.classList.add("ativo");
         }
 
         const titulos = {
-            calendario: ["Calendário", "Consulte datas e dias do mês."],
-            calculadora: ["Calculadora", "Faça cálculos rápidos."],
-            notas: ["Bloco de notas", "Guarde lembretes neste navegador."]
+            calendario: [
+                "Calendário",
+                "Consulte datas e organize seus compromissos."
+            ],
+            calculadora: [
+                "Calculadora",
+                "Realize cálculos rápidos."
+            ],
+            notas: [
+                "Bloco de notas",
+                "Guarde suas anotações neste navegador."
+            ]
         };
 
         const titulo = elemento("tituloPagina");
         const subtitulo = elemento("subtituloPagina");
 
-        if (titulo && titulos[nome]) titulo.textContent = titulos[nome][0];
-        if (subtitulo && titulos[nome]) subtitulo.textContent = titulos[nome][1];
-    }
+        if (titulo) {
+            titulo.textContent = titulos[selecionada][0];
+        }
 
-    /*
-     * Disponibiliza a função para os onclick do index.html.
-     */
-    window.abrirAbaFerramentas = abrirAbaFerramentas;
-   window.abrirAbaFerramentas = function (nome) {
-    const pagina = document.getElementById("paginaFerramentas");
-
-    if (!pagina) {
-        console.error("A página de Ferramentas não foi criada.");
-        return;
-    }
-
-    const conteudo = document.getElementById("areaConteudo");
-
-    if (conteudo) {
-        Array.from(conteudo.children).forEach(function (item) {
-            item.style.display = item === pagina ? "block" : "none";
-        });
-    }
-
-    pagina.style.display = "block";
-
-    const paineis = {
-        calendario: "ferramentaCalendario",
-        calculadora: "ferramentaCalculadora",
-        notas: "ferramentaNotas"
+        if (subtitulo) {
+            subtitulo.textContent = titulos[selecionada][1];
+        }
     };
 
-    Object.entries(paineis).forEach(function ([chave, id]) {
-        const painel = document.getElementById(id);
+    /* =====================================================
+       VOLTAR ÀS OUTRAS ÁREAS DO SISTEMA
+    ===================================================== */
 
-        if (painel) {
-            painel.style.display = chave === nome ? "block" : "none";
-        }
-    });
-};
+    function configurarRetornoNavegacao() {
+        if (eventosConfigurados) return;
+
+        eventosConfigurados = true;
+
+        document.addEventListener("click", function (evento) {
+            const botao = evento.target.closest(".menu-item");
+
+            if (!botao) return;
+
+            const idsFerramentas = [
+                "btnFerramentaCalendario",
+                "btnFerramentaCalculadora",
+                "btnFerramentaNotas"
+            ];
+
+            if (idsFerramentas.includes(botao.id)) return;
+
+            const pagina = elemento("paginaFerramentas");
+            const conteudo = elemento("areaConteudo");
+
+            if (pagina) {
+                pagina.style.display = "none";
+            }
+
+            if (conteudo) {
+                conteudo.style.display = "";
+            }
+        }, true);
+    }
 
     /* =====================================================
        CALENDÁRIO
     ===================================================== */
 
     function configurarCalendario() {
-        elemento("calendarioAnterior").addEventListener("click", function () {
-            dataCalendario.setMonth(dataCalendario.getMonth() - 1);
-            mostrarCalendario();
-        });
+        const anterior = elemento("calendarioAnterior");
+        const proximo = elemento("calendarioProximo");
 
-        elemento("calendarioProximo").addEventListener("click", function () {
-            dataCalendario.setMonth(dataCalendario.getMonth() + 1);
-            mostrarCalendario();
-        });
+        if (anterior) {
+            anterior.addEventListener("click", function () {
+                dataCalendario.setMonth(
+                    dataCalendario.getMonth() - 1
+                );
+                mostrarCalendario();
+            });
+        }
 
-        elemento("calendarioHoje").addEventListener("click", function () {
-            dataCalendario = new Date();
-            dataSelecionada = new Date();
-            mostrarCalendario();
-        });
+        if (proximo) {
+            proximo.addEventListener("click", function () {
+                dataCalendario.setMonth(
+                    dataCalendario.getMonth() + 1
+                );
+                mostrarCalendario();
+            });
+        }
     }
 
     function mostrarCalendario() {
+        const grade = elemento("calendarioDias");
+        const titulo = elemento("calendarioMesAno");
+
+        if (!grade || !titulo) return;
+
         const ano = dataCalendario.getFullYear();
         const mes = dataCalendario.getMonth();
 
-        elemento("calendarioTitulo").textContent =
-            dataCalendario.toLocaleDateString("pt-BR", {
+        titulo.textContent = dataCalendario.toLocaleDateString(
+            "pt-BR",
+            {
                 month: "long",
                 year: "numeric"
-            });
-
-        const grade = elemento("calendarioGrade");
-        grade.innerHTML = "";
-
-        ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].forEach(
-            function (dia) {
-                const celula = document.createElement("div");
-                celula.className = "calendario-dia-semana";
-                celula.textContent = dia;
-                grade.appendChild(celula);
             }
         );
+
+        grade.innerHTML = "";
 
         const primeiroDia = new Date(ano, mes, 1).getDay();
         const totalDias = new Date(ano, mes + 1, 0).getDate();
 
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+
         for (let i = 0; i < primeiroDia; i++) {
-            grade.appendChild(document.createElement("div"));
+            const vazio = document.createElement("span");
+            vazio.className = "calendario-vazio";
+            grade.appendChild(vazio);
         }
 
         for (let dia = 1; dia <= totalDias; dia++) {
-            const celula = document.createElement("button");
-            celula.type = "button";
-            celula.className = "calendario-dia";
-            celula.textContent = dia;
+            const data = new Date(ano, mes, dia);
+            const botao = document.createElement("button");
 
-            const hoje = new Date();
+            botao.type = "button";
+            botao.className = "calendario-dia";
+            botao.textContent = dia;
 
-            if (
-                dia === hoje.getDate() &&
-                mes === hoje.getMonth() &&
-                ano === hoje.getFullYear()
-            ) {
-                celula.classList.add("hoje");
+            if (data.getTime() === hoje.getTime()) {
+                botao.classList.add("hoje");
             }
 
-            if (
-                dia === dataSelecionada.getDate() &&
-                mes === dataSelecionada.getMonth() &&
-                ano === dataSelecionada.getFullYear()
-            ) {
-                celula.classList.add("selecionado");
-            }
+            botao.addEventListener("click", function () {
+                grade.querySelectorAll(".selecionado").forEach(item => {
+                    item.classList.remove("selecionado");
+                });
 
-            celula.addEventListener("click", function () {
-                dataSelecionada = new Date(ano, mes, dia);
-                mostrarCalendario();
+                botao.classList.add("selecionado");
+
+                const selecionada = elemento(
+                    "calendarioDataSelecionada"
+                );
+
+                if (selecionada) {
+                    selecionada.textContent =
+                        "Data selecionada: " +
+                        data.toLocaleDateString("pt-BR");
+                }
             });
 
-            grade.appendChild(celula);
+            grade.appendChild(botao);
         }
-
-        elemento("calendarioSelecionado").textContent =
-            "Data selecionada: " +
-            dataSelecionada.toLocaleDateString("pt-BR");
     }
 
     /* =====================================================
@@ -5532,194 +5632,176 @@ document.addEventListener(
     ===================================================== */
 
     function configurarNotas() {
-        const campo = elemento("ferramentasNotasTexto");
-        const status = elemento("notasStatus");
+        const campo = elemento("blocoNotasTexto");
+        const limpar = elemento("blocoNotasLimpar");
+        const status = elemento("blocoNotasStatus");
+
+        if (!campo) return;
 
         try {
             campo.value = localStorage.getItem(CHAVE_NOTAS) || "";
         } catch (erro) {
-            status.textContent = "Não foi possível carregar as notas.";
+            console.warn("Não foi possível carregar as anotações.", erro);
         }
 
         campo.addEventListener("input", function () {
             try {
                 localStorage.setItem(CHAVE_NOTAS, campo.value);
-                status.textContent = "Notas salvas automaticamente.";
+
+                if (status) {
+                    status.textContent = "Anotações salvas.";
+                }
             } catch (erro) {
-                status.textContent = "Não foi possível salvar as notas.";
+                if (status) {
+                    status.textContent =
+                        "Não foi possível salvar neste navegador.";
+                }
             }
         });
 
-        elemento("limparNotas").addEventListener("click", function () {
-            if (!confirm("Deseja apagar todas as anotações salvas?")) return;
+        if (limpar) {
+            limpar.addEventListener("click", function () {
+                if (!confirm("Deseja apagar todas as anotações?")) {
+                    return;
+                }
 
-            campo.value = "";
+                campo.value = "";
 
-            try {
-                localStorage.removeItem(CHAVE_NOTAS);
-                status.textContent = "Notas apagadas.";
-            } catch (erro) {
-                status.textContent = "Não foi possível apagar as notas.";
-            }
-        });
+                try {
+                    localStorage.removeItem(CHAVE_NOTAS);
+                } catch (erro) {
+                    console.warn("Não foi possível limpar as anotações.", erro);
+                }
+
+                if (status) {
+                    status.textContent = "Anotações apagadas.";
+                }
+            });
+        }
     }
 
     /* =====================================================
        CALCULADORA
     ===================================================== */
 
-    function atualizarVisor() {
-        elemento("calculadoraVisor").value =
-            calculadoraVisor.replace(".", ",");
-    }
-
-    function limparCalculadora() {
-        calculadoraVisor = "0";
-        calculadoraAnterior = null;
-        calculadoraOperador = null;
-        calculadoraNovoNumero = false;
-        atualizarVisor();
-    }
-
-    function calcular(a, b, operador) {
-        if (operador === "+") return a + b;
-        if (operador === "-") return a - b;
-        if (operador === "*") return a * b;
-        if (operador === "/") return b === 0 ? null : a / b;
-        return b;
-    }
-
     function configurarCalculadora() {
-        document.querySelectorAll("#paginaFerramentas [data-calc]")
-            .forEach(function (botao) {
-                botao.addEventListener("click", function () {
-                    const tipo = botao.dataset.calc;
-                    const valor = botao.dataset.valor;
+        const visor = elemento("calculadoraVisor");
+        const botoes = document.querySelectorAll("[data-calc]");
 
-                    if (tipo === "limpar") {
-                        limparCalculadora();
-                        return;
+        if (!visor) return;
+
+        let expressao = "";
+        let resultadoExibido = false;
+
+        botoes.forEach(botao => {
+            botao.addEventListener("click", function () {
+                const valor = botao.dataset.calc;
+
+                if (valor === "limpar") {
+                    expressao = "";
+                    resultadoExibido = false;
+                    visor.value = "0";
+                    return;
+                }
+
+                if (valor === "apagar") {
+                    expressao = expressao.slice(0, -1);
+                    resultadoExibido = false;
+                    visor.value = expressao.replace(/\./g, ",") || "0";
+                    return;
+                }
+
+                if (valor === "sinal") {
+                    if (!expressao) return;
+
+                    if (expressao.startsWith("-")) {
+                        expressao = expressao.slice(1);
+                    } else {
+                        expressao = "-" + expressao;
                     }
 
-                    if (tipo === "numero") {
-                        if (
-                            calculadoraNovoNumero ||
-                            calculadoraVisor === "0" ||
-                            calculadoraVisor === "Erro"
-                        ) {
-                            calculadoraVisor = valor;
-                            calculadoraNovoNumero = false;
-                        } else {
-                            calculadoraVisor += valor;
+                    visor.value = expressao.replace(/\./g, ",");
+                    return;
+                }
+
+                if (valor === "=") {
+                    if (!expressao) return;
+
+                    try {
+                        if (!/^[0-9+\-*/().%\s]+$/.test(expressao)) {
+                            throw new Error("Expressão inválida");
                         }
 
-                        atualizarVisor();
-                        return;
-                    }
+                        const resultado = Function(
+                            '"use strict"; return (' + expressao + ')'
+                        )();
 
-                    if (tipo === "decimal") {
-                        if (calculadoraNovoNumero) {
-                            calculadoraVisor = "0";
-                            calculadoraNovoNumero = false;
+                        if (!Number.isFinite(resultado)) {
+                            throw new Error("Resultado inválido");
                         }
 
-                        if (!calculadoraVisor.includes(".")) {
-                            calculadoraVisor += ".";
-                        }
-
-                        atualizarVisor();
-                        return;
-                    }
-
-                    if (tipo === "sinal") {
-                        if (calculadoraVisor !== "0" &&
-                            calculadoraVisor !== "Erro") {
-                            calculadoraVisor = String(
-                                -Number(calculadoraVisor)
-                            );
-                            atualizarVisor();
-                        }
-                        return;
-                    }
-
-                    if (tipo === "apagar") {
-                        if (calculadoraVisor === "Erro") {
-                            calculadoraVisor = "0";
-                        } else {
-                            calculadoraVisor =
-                                calculadoraVisor.length > 1
-                                    ? calculadoraVisor.slice(0, -1)
-                                    : "0";
-                        }
-
-                        atualizarVisor();
-                        return;
-                    }
-
-                    if (tipo === "operador") {
-                        if (calculadoraVisor === "Erro") {
-                            limparCalculadora();
-                            return;
-                        }
-
-                        if (calculadoraOperador && !calculadoraNovoNumero) {
-                            const resultado = calcular(
-                                calculadoraAnterior,
-                                Number(calculadoraVisor),
-                                calculadoraOperador
-                            );
-
-                            if (resultado === null ||
-                                !Number.isFinite(resultado)) {
-                                calculadoraVisor = "Erro";
-                                calculadoraAnterior = null;
-                                calculadoraOperador = null;
-                                calculadoraNovoNumero = true;
-                                atualizarVisor();
-                                return;
-                            }
-
-                            calculadoraVisor = String(
-                                Number(resultado.toPrecision(12))
-                            );
-                        }
-
-                        calculadoraAnterior = Number(calculadoraVisor);
-                        calculadoraOperador = valor;
-                        calculadoraNovoNumero = true;
-                        atualizarVisor();
-                        return;
-                    }
-
-                    if (tipo === "igual" && calculadoraOperador) {
-                        const resultado = calcular(
-                            calculadoraAnterior,
-                            Number(calculadoraVisor),
-                            calculadoraOperador
+                        expressao = String(
+                            Number(resultado.toFixed(10))
                         );
 
-                        if (resultado === null ||
-                            !Number.isFinite(resultado)) {
-                            calculadoraVisor = "Erro";
-                        } else {
-                            calculadoraVisor = String(
-                                Number(resultado.toPrecision(12))
-                            );
-                        }
-
-                        calculadoraAnterior = null;
-                        calculadoraOperador = null;
-                        calculadoraNovoNumero = true;
-                        atualizarVisor();
+                        visor.value = expressao.replace(/\./g, ",");
+                        resultadoExibido = true;
+                    } catch (erro) {
+                        visor.value = "Erro";
+                        expressao = "";
+                        resultadoExibido = false;
                     }
-                });
-            });
 
-        atualizarVisor();
+                    return;
+                }
+
+                if (valor === "%") {
+                    const numero = expressao.match(
+                        /(-?\d*\.?\d+)$/
+                    );
+
+                    if (numero) {
+                        const percentual = String(
+                            Number(numero[0]) / 100
+                        );
+
+                        expressao =
+                            expressao.slice(
+                                0,
+                                expressao.length - numero[0].length
+                            ) + percentual;
+
+                        visor.value = expressao.replace(/\./g, ",");
+                    }
+
+                    return;
+                }
+
+                if (resultadoExibido && /[0-9.]/.test(valor)) {
+                    expressao = "";
+                }
+
+                resultadoExibido = false;
+
+                if (valor === ".") {
+                    const partes = expressao.split(/[+\-*/()]/);
+                    const ultimoNumero = partes[partes.length - 1];
+
+                    if (ultimoNumero.includes(".")) return;
+
+                    if (!ultimoNumero) {
+                        expressao += "0";
+                    }
+                }
+
+                expressao += valor;
+                visor.value = expressao.replace(/\./g, ",");
+            });
+        });
     }
 
     /* =====================================================
-       ESTILOS
+       ESTILOS DAS FERRAMENTAS
     ===================================================== */
 
     function adicionarEstilos() {
@@ -5730,152 +5812,215 @@ document.addEventListener(
 
         estilo.textContent = `
             #paginaFerramentas {
+                width: 100%;
                 padding: 24px;
-                color: inherit;
+                box-sizing: border-box;
             }
 
-            .ferramentas-cabecalho {
+            .ferramentas-container {
+                width: 100%;
+                max-width: 1000px;
+                margin: 0 auto;
+            }
+
+            .ferramenta-painel {
+                width: 100%;
+            }
+
+            .ferramenta-cabecalho {
                 margin-bottom: 24px;
             }
 
-            .ferramentas-cabecalho h2 {
-                margin-bottom: 6px;
+            .ferramenta-cabecalho h2 {
+                margin: 0 0 8px;
+                color: var(--cor-texto, #25282b);
+                font-size: 25px;
             }
 
-            .ferramentas-cabecalho p {
-                opacity: .75;
+            .ferramenta-cabecalho p {
+                margin: 0;
+                color: var(--cor-texto-secundario, #6b7280);
             }
 
-            .ferramenta-cartao {
-                max-width: 760px;
-                padding: 20px;
-                border: 1px solid #d1d5db;
+            .calendario-card,
+            .notas-card {
+                padding: 24px;
+                background: var(--cor-card, #fff);
+                border: 1px solid var(--cor-borda, #e5e7eb);
                 border-radius: 12px;
-                background: var(--fundo-ferramentas, #fff);
-                color: inherit;
+                box-shadow: 0 3px 12px rgba(0,0,0,.04);
             }
 
-            .ferramenta-cartao h3 {
-                margin: 0 0 16px;
-            }
-
-            .ferramenta-cartao button {
-                cursor: pointer;
-            }
-
-            .calendario-topo {
+            .calendario-controles {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 gap: 12px;
-                margin-bottom: 18px;
+                margin-bottom: 22px;
             }
 
-            .calendario-topo h3 {
+            .calendario-controles h3 {
                 margin: 0;
                 text-transform: capitalize;
                 text-align: center;
             }
 
-            .calendario-topo button {
-                font-size: 24px;
-                padding: 4px 14px;
+            .calendario-controles button,
+            .notas-acoes button {
+                border: 0;
+                border-radius: 7px;
+                padding: 10px 14px;
+                cursor: pointer;
+                background: #1f6b45;
+                color: white;
             }
 
-            .calendario-grade {
+            .calendario-semana,
+            .calendario-dias {
                 display: grid;
                 grid-template-columns: repeat(7, minmax(0, 1fr));
-                gap: 5px;
+                gap: 8px;
+                text-align: center;
             }
 
-            .calendario-dia-semana {
-                padding: 8px 0;
-                text-align: center;
-                font-weight: bold;
+            .calendario-semana {
+                margin-bottom: 10px;
+                font-weight: 700;
+            }
+
+            .calendario-dias button,
+            .calendario-vazio {
+                min-width: 0;
+                min-height: 42px;
             }
 
             .calendario-dia {
-                min-width: 0;
-                padding: 12px 2px;
-                border: 1px solid #e5e7eb;
+                border: 1px solid var(--cor-borda, #e5e7eb);
                 border-radius: 7px;
-                background: transparent;
-                color: inherit;
+                background: var(--cor-card, #fff);
+                color: var(--cor-texto, #25282b);
+                cursor: pointer;
+            }
+
+            .calendario-dia:hover,
+            .calendario-dia.selecionado {
+                background: #1f6b45;
+                color: white;
             }
 
             .calendario-dia.hoje {
-                border: 2px solid #2563eb;
-                font-weight: bold;
+                border: 2px solid #1f6b45;
+                font-weight: 700;
             }
 
-            .calendario-dia.selecionado {
-                background: #2563eb;
-                color: #fff;
+            .calendario-selecionada {
+                margin: 20px 0 0;
+                color: var(--cor-texto-secundario, #6b7280);
             }
 
-            #ferramentasNotasTexto {
-                display: block;
-                box-sizing: border-box;
+            .calculadora {
                 width: 100%;
-                margin: 14px 0;
-                padding: 12px;
-                resize: vertical;
-                border: 1px solid #d1d5db;
-                border-radius: 8px;
-                font: inherit;
-                background: transparent;
-                color: inherit;
-            }
-
-            .calculadora-cartao {
                 max-width: 360px;
+                padding: 20px;
+                background: var(--cor-card, #fff);
+                border: 1px solid var(--cor-borda, #e5e7eb);
+                border-radius: 12px;
+                box-shadow: 0 3px 12px rgba(0,0,0,.04);
             }
 
             #calculadoraVisor {
-                box-sizing: border-box;
                 width: 100%;
+                height: 65px;
+                margin-bottom: 14px;
                 padding: 12px;
+                box-sizing: border-box;
                 text-align: right;
-                font-size: 2rem;
-                border: 1px solid #d1d5db;
+                font-size: 28px;
+                border: 1px solid var(--cor-borda, #e5e7eb);
                 border-radius: 8px;
-                background: transparent;
-                color: inherit;
+                background: var(--cor-fundo, #f8faf9);
+                color: var(--cor-texto, #25282b);
             }
 
-            .calculadora-grade {
+            .calculadora-botoes {
                 display: grid;
                 grid-template-columns: repeat(4, minmax(0, 1fr));
                 gap: 8px;
+            }
+
+            .calculadora-botoes button {
+                min-height: 52px;
+                border: 1px solid var(--cor-borda, #e5e7eb);
+                border-radius: 8px;
+                background: var(--cor-card, #fff);
+                color: var(--cor-texto, #25282b);
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            .calculadora-botoes .calc-operacao {
+                background: #edf4ef;
+                color: #1f6b45;
+            }
+
+            .calculadora-botoes .calc-igual {
+                background: #1f6b45;
+                color: white;
+            }
+
+            .notas-card label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: 700;
+            }
+
+            #blocoNotasTexto {
+                display: block;
+                width: 100%;
+                min-height: 280px;
+                padding: 14px;
+                box-sizing: border-box;
+                resize: vertical;
+                border: 1px solid var(--cor-borda, #e5e7eb);
+                border-radius: 8px;
+                background: var(--cor-card, #fff);
+                color: var(--cor-texto, #25282b);
+                font: inherit;
+                line-height: 1.6;
+            }
+
+            .notas-acoes {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
                 margin-top: 14px;
             }
 
-            .calculadora-grade button {
-                min-height: 52px;
-                border: 1px solid #d1d5db;
-                border-radius: 8px;
-                font-size: 18px;
-                background: var(--cor-ferramentas, #f3f4f6);
-                color: inherit;
-            }
-
-            body.tema-escuro #paginaFerramentas .ferramenta-cartao {
-                --fundo-ferramentas: #25282b;
-                --cor-ferramentas: #353a40;
-                border-color: #4b5563;
+            #blocoNotasStatus {
+                color: var(--cor-texto-secundario, #6b7280);
+                font-size: 13px;
             }
 
             @media (max-width: 600px) {
                 #paginaFerramentas {
-                    padding: 12px;
+                    padding: 14px;
                 }
 
-                .ferramenta-cartao {
-                    padding: 12px;
+                .calendario-card,
+                .notas-card {
+                    padding: 14px;
                 }
 
-                .calendario-dia {
-                    padding: 9px 0;
+                .calendario-semana,
+                .calendario-dias {
+                    gap: 4px;
+                }
+
+                .calendario-dias button,
+                .calendario-vazio {
+                    min-height: 36px;
                 }
             }
         `;
@@ -5887,20 +6032,81 @@ document.addEventListener(
        INICIALIZAÇÃO
     ===================================================== */
 
-    function iniciarFerramentas() {
-        try {
-            criarAbaFerramentas();
-        } catch (erro) {
-            console.error(
-                "Erro ao iniciar as ferramentas do Prancheta RH:",
-                erro
-            );
-        }
-    }
+    configurarRetornoNavegacao();
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", iniciarFerramentas);
-    } else {
-        iniciarFerramentas();
-    }
+    // Mantém a função disponível para os onclick do HTML.
+    window.abrirAbaFerramentas = function (nome) {
+        if (!ferramentasCriadas || !elemento("paginaFerramentas")) {
+            criarAbaFerramentas();
+        }
+
+        const pagina = elemento("paginaFerramentas");
+        const conteudo = elemento("areaConteudo");
+
+        if (!pagina || !conteudo) {
+            console.error(
+                "Prancheta RH: não foi possível criar a página de Ferramentas."
+            );
+            return;
+        }
+
+        const paineis = {
+            calendario: "ferramentaCalendario",
+            calculadora: "ferramentaCalculadora",
+            notas: "ferramentaNotas"
+        };
+
+        const selecionada = paineis[nome] ? nome : "calendario";
+
+        conteudo.style.display = "none";
+        pagina.style.display = "block";
+
+        Object.entries(paineis).forEach(([chave, id]) => {
+            const painel = elemento(id);
+
+            if (painel) {
+                painel.style.display =
+                    chave === selecionada ? "block" : "none";
+            }
+        });
+
+        document.querySelectorAll(".menu-item").forEach(botao => {
+            botao.classList.remove("ativo");
+        });
+
+        const botoes = {
+            calendario: "btnFerramentaCalendario",
+            calculadora: "btnFerramentaCalculadora",
+            notas: "btnFerramentaNotas"
+        };
+
+        const botaoAtivo = elemento(botoes[selecionada]);
+
+        if (botaoAtivo) {
+            botaoAtivo.classList.add("ativo");
+        }
+
+        const titulos = {
+            calendario: [
+                "Calendário",
+                "Consulte datas e organize seus compromissos."
+            ],
+            calculadora: [
+                "Calculadora",
+                "Realize cálculos rapidamente."
+            ],
+            notas: [
+                "Bloco de notas",
+                "Guarde suas anotações neste navegador."
+            ]
+        };
+
+        const titulo = elemento("tituloPagina");
+        const subtitulo = elemento("subtituloPagina");
+
+        if (titulo) titulo.textContent = titulos[selecionada][0];
+        if (subtitulo) subtitulo.textContent = titulos[selecionada][1];
+    };
+
 })();
+```
