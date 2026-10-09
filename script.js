@@ -5244,9 +5244,12 @@ document.addEventListener(
     function criarAbaFerramentas() {
         if (elemento("paginaFerramentas")) return;
 
-        const navegacao = document.querySelector(
-            ".sidebar, nav, .menu, .menu-lateral"
-        );
+     ```js
+const navegacao = document.querySelector(".sidebar nav.menu");
+
+const conteudo = document.querySelector("#areaConteudo");
+```
+
 
         const conteudo = document.querySelector(
             ".main-content, .conteudo-principal, main, .content"
@@ -5268,29 +5271,22 @@ document.addEventListener(
         botao.textContent = "Ferramentas";
         botao.addEventListener("click", abrirAbaFerramentas);
 
-        const botoesMenu = navegacao.querySelectorAll(
-    "button, a, [role='button']"
-);
-
-let botaoCalculos = null;
-
-botoesMenu.forEach(function (item) {
-    if (item.textContent.trim().toLowerCase().includes("cálculos")) {
-        botaoCalculos = item;
-    }
+      ```js
+// Insere FERRAMENTAS imediatamente após os itens de CÁLCULOS
+// e antes do título MATRÍCULA.
+const tituloMatricula = Array.from(
+    navegacao.querySelectorAll(".menu-titulo")
+).find(function (item) {
+    return item.textContent.trim().toUpperCase() === "MATRÍCULA";
 });
 
-if (botaoCalculos) {
-    const grupoMenu = botaoCalculos.parentElement;
-
-    if (grupoMenu) {
-        grupoMenu.insertAdjacentElement("afterend", botao);
-    } else {
-        navegacao.appendChild(botao);
-    }
+if (tituloMatricula) {
+    navegacao.insertBefore(botao, tituloMatricula);
 } else {
     navegacao.appendChild(botao);
 }
+```
+
 
         const pagina = document.createElement("section");
         pagina.id = "paginaFerramentas";
