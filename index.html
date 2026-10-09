@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -53,18 +54,6 @@
                     <span class="menu-icone">▤</span>
                     <span>Folha de pagamento</span>
                 </button>
-       
-<div class="menu-titulo espacamento">FERRAMENTAS</div>
-
-<button
-    type="button"
-    class="menu-item"
-    id="btnAbaFerramentas"
-    onclick="abrirAbaFerramentas()">
-    <span class="menu-icone">▦</span>
-    <span>Calendário, bloco de notas e calculadora</span>
-</button>
-
 
                 <div class="menu-titulo espacamento">MATRÍCULA</div>
 
@@ -96,6 +85,34 @@
                     <span>Exportar funcionários</span>
                 </button>
 
+                <!-- FERRAMENTAS: DEPOIS DE MATRÍCULA -->
+
+                <div class="menu-titulo espacamento">FERRAMENTAS</div>
+
+                <button
+                    type="button"
+                    class="menu-item"
+                    onclick="abrirAbaFerramentas('calendario')">
+                    <span class="menu-icone">▦</span>
+                    <span>Calendário</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="menu-item"
+                    onclick="abrirAbaFerramentas('calculadora')">
+                    <span class="menu-icone">▤</span>
+                    <span>Calculadora</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="menu-item"
+                    onclick="abrirAbaFerramentas('notas')">
+                    <span class="menu-icone">▧</span>
+                    <span>Bloco de notas</span>
+                </button>
+
             </nav>
 
             <div class="versao">
@@ -112,9 +129,7 @@
                     aria-label="Abrir configurações"
                     title="Configurações"
                     onclick="abrirConfiguracoes()">
-
                     ⚙
-
                 </button>
 
             </div>
@@ -158,7 +173,6 @@
 
                 <div>
                     <h2 id="tituloConfiguracoes">Configurações</h2>
-
                     <p>Personalize a aparência do sistema.</p>
                 </div>
 
@@ -167,9 +181,7 @@
                     class="modal-fechar"
                     onclick="fecharConfiguracoes()"
                     aria-label="Fechar configurações">
-
                     ×
-
                 </button>
 
             </div>
@@ -216,18 +228,14 @@
                     type="button"
                     class="btn btn-secundario"
                     onclick="fecharConfiguracoes()">
-
                     Cancelar
-
                 </button>
 
                 <button
                     type="button"
                     class="btn btn-principal"
                     onclick="salvarConfiguracoes()">
-
                     Salvar preferências
-
                 </button>
 
             </div>
@@ -241,3 +249,4 @@
 
 </body>
 </html>
+```
