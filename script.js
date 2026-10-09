@@ -5268,7 +5268,23 @@ document.addEventListener(
         botao.textContent = "Ferramentas";
         botao.addEventListener("click", abrirAbaFerramentas);
 
-        navegacao.appendChild(botao);
+        const botoesMenu = navegacao.querySelectorAll(
+    "button, a, [role='button']"
+);
+
+let botaoCalculos = null;
+
+botoesMenu.forEach(function (item) {
+    if (item.textContent.trim().toLowerCase().includes("cálculos")) {
+        botaoCalculos = item;
+    }
+});
+
+if (botaoCalculos && botaoCalculos.parentElement) {
+    botaoCalculos.insertAdjacentElement("afterend", botao);
+} else {
+    navegacao.appendChild(botao);
+}
 
         const pagina = document.createElement("section");
         pagina.id = "paginaFerramentas";
