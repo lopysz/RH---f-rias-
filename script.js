@@ -5406,6 +5406,38 @@ document.addEventListener(
      * Disponibiliza a função para os onclick do index.html.
      */
     window.abrirAbaFerramentas = abrirAbaFerramentas;
+   window.abrirAbaFerramentas = function (nome) {
+    const pagina = document.getElementById("paginaFerramentas");
+
+    if (!pagina) {
+        console.error("A página de Ferramentas não foi criada.");
+        return;
+    }
+
+    const conteudo = document.getElementById("areaConteudo");
+
+    if (conteudo) {
+        Array.from(conteudo.children).forEach(function (item) {
+            item.style.display = item === pagina ? "block" : "none";
+        });
+    }
+
+    pagina.style.display = "block";
+
+    const paineis = {
+        calendario: "ferramentaCalendario",
+        calculadora: "ferramentaCalculadora",
+        notas: "ferramentaNotas"
+    };
+
+    Object.entries(paineis).forEach(function ([chave, id]) {
+        const painel = document.getElementById(id);
+
+        if (painel) {
+            painel.style.display = chave === nome ? "block" : "none";
+        }
+    });
+};
 
     /* =====================================================
        CALENDÁRIO
