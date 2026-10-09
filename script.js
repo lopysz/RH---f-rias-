@@ -5203,10 +5203,3 @@ document.addEventListener(
 
     }
 );
-/* =========================================================
-   CONFIGURAÇÕES VISUAIS
-   Tema claro/escuro e espaçamento
-========================================================= */
-
-// As funções do botão serão adicionadas aqui.
-
