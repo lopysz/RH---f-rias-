@@ -1,7 +1,5 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,94 +10,105 @@
 </head>
 
 <body>
-
     <div class="app">
 
-        <!-- MENU LATERAL -->
         <aside class="sidebar">
 
             <div class="logo">
-                <strong>PRANCHETA RH</strong>
+                <div class="logo-marca">
+                    <strong>PRANCHETA RH</strong>
+                </div>
+
                 <span>Sistema de Recursos Humanos</span>
             </div>
 
             <nav class="menu">
 
-                <!-- CÁLCULOS -->
                 <div class="menu-titulo">CÁLCULOS</div>
 
                 <button
                     class="menu-item ativo"
-                    onclick="abrirPagina('ferias', this)"
-                >
-                    Férias
+                    onclick="abrirPagina('ferias', this)">
+                    <span class="menu-icone">▤</span>
+                    <span>Férias</span>
                 </button>
 
                 <button
                     class="menu-item"
-                    onclick="abrirPagina('consignado', this)"
-                >
-                    Empréstimo consignado
+                    onclick="abrirPagina('consignado', this)">
+                    <span class="menu-icone">▤</span>
+                    <span>Empréstimo consignado</span>
                 </button>
 
                 <button
                     class="menu-item"
-                    onclick="abrirPagina('planilhaConsignado', this)"
-                >
-                    Planilha consignado
+                    onclick="abrirPagina('planilhaConsignado', this)">
+                    <span class="menu-icone">▦</span>
+                    <span>Planilha consignado</span>
                 </button>
 
                 <button
                     class="menu-item"
-                    onclick="abrirPagina('folha', this)"
-                >
-                    Folha de pagamento
+                    onclick="abrirPagina('folha', this)">
+                    <span class="menu-icone">▤</span>
+                    <span>Folha de pagamento</span>
                 </button>
 
-
-                <!-- MATRÍCULA -->
                 <div class="menu-titulo espacamento">MATRÍCULA</div>
 
                 <button
                     class="menu-item"
-                    onclick="abrirPagina('cadastrar', this)"
-                >
-                    Cadastrar funcionário
+                    onclick="abrirPagina('cadastrar', this)">
+                    <span class="menu-icone">＋</span>
+                    <span>Cadastrar funcionário</span>
                 </button>
 
                 <button
                     class="menu-item"
-                    onclick="abrirPagina('funcionarios', this)"
-                >
-                    Funcionários
+                    onclick="abrirPagina('funcionarios', this)">
+                    <span class="menu-icone">♙</span>
+                    <span>Funcionários</span>
                 </button>
 
                 <button
                     class="menu-item"
-                    onclick="abrirPagina('planilhas', this)"
-                >
-                    Planilhas de funcionários
+                    onclick="abrirPagina('planilhas', this)">
+                    <span class="menu-icone">▦</span>
+                    <span>Planilhas de funcionários</span>
                 </button>
 
                 <button
                     class="menu-item"
-                    onclick="exportarFuncionarios()"
-                >
-                    Exportar funcionários
+                    onclick="exportarFuncionarios()">
+                    <span class="menu-icone">⇩</span>
+                    <span>Exportar funcionários</span>
                 </button>
 
             </nav>
 
-            <!-- RODAPÉ DO MENU -->
             <div class="versao">
-                Prancheta RH
-                <span>Versão Beta</span>
+
+                <div class="versao-informacoes">
+                    <strong>Prancheta RH</strong>
+                    <span>Versão Beta</span>
+                </div>
+
+                <button
+                    type="button"
+                    class="botao-configuracoes"
+                    id="abrirConfiguracoes"
+                    aria-label="Abrir configurações"
+                    title="Configurações"
+                    onclick="abrirConfiguracoes()">
+
+                    ⚙
+
+                </button>
+
             </div>
 
         </aside>
 
-
-        <!-- CONTEÚDO PRINCIPAL -->
         <main class="conteudo">
 
             <header class="cabecalho">
@@ -114,20 +123,109 @@
 
             </header>
 
-            <!-- ÁREA ONDE O JAVASCRIPT EXIBE AS TELAS -->
             <section id="areaConteudo"></section>
 
         </main>
 
     </div>
 
-    <!-- BIBLIOTECA PARA IMPORTAR E EXPORTAR PLANILHAS -->
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <!-- JANELA DE CONFIGURAÇÕES -->
 
-    <!-- SCRIPT PRINCIPAL DO SISTEMA -->
+    <div
+        class="modal-overlay"
+        id="modalConfiguracoes"
+        aria-hidden="true">
+
+        <div
+            class="modal-configuracoes"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="tituloConfiguracoes">
+
+            <div class="modal-cabecalho">
+
+                <div>
+                    <h2 id="tituloConfiguracoes">Configurações</h2>
+
+                    <p>Personalize a aparência do sistema.</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-fechar"
+                    onclick="fecharConfiguracoes()"
+                    aria-label="Fechar configurações">
+
+                    ×
+
+                </button>
+
+            </div>
+
+            <div class="modal-corpo">
+
+                <div class="configuracao-grupo">
+
+                    <label for="temaSistema">Tema do sistema</label>
+
+                    <select id="temaSistema">
+                        <option value="claro">Claro</option>
+                        <option value="escuro">Escuro</option>
+                    </select>
+
+                    <small>
+                        Escolha entre a aparência clara e a escura.
+                    </small>
+
+                </div>
+
+                <div class="configuracao-grupo">
+
+                    <label for="espacamentoSistema">
+                        Espaçamento da interface
+                    </label>
+
+                    <select id="espacamentoSistema">
+                        <option value="normal">Normal</option>
+                        <option value="compacto">Compacto</option>
+                    </select>
+
+                    <small>
+                        O modo compacto reduz o espaçamento dos elementos.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="modal-rodape">
+
+                <button
+                    type="button"
+                    class="btn btn-secundario"
+                    onclick="fecharConfiguracoes()">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-principal"
+                    onclick="salvarConfiguracoes()">
+
+                    Salvar preferências
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <script src="script.js"></script>
 
 </body>
-
 </html>
-```
