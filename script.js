@@ -5204,6 +5204,7 @@ document.addEventListener(
     }
 );
 
+
 /* =========================================================
    PRANCHETA RH — MÓDULO DE FERRAMENTAS
    Calendário, bloco de notas e calculadora
@@ -5216,6 +5217,7 @@ document.addEventListener(
 
     let dataCalendario = new Date();
     let dataSelecionada = new Date();
+
     let calculadoraVisor = "0";
     let calculadoraAnterior = null;
     let calculadoraOperador = null;
@@ -5225,121 +5227,44 @@ document.addEventListener(
         return document.getElementById(id);
     }
 
-    function escaparHTML(valor) {
-        return String(valor).replace(/[&<>"']/g, function (caractere) {
-            return {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            }[caractere];
-        });
-    }
-
     /* =====================================================
-       CRIAÇÃO DA ABA FERRAMENTAS
+       CRIAÇÃO DA ÁREA DE FERRAMENTAS
     ===================================================== */
 
     function criarAbaFerramentas() {
         if (elemento("paginaFerramentas")) return;
 
-     ```js
-const navegacao = document.querySelector(".sidebar nav.menu");
+        const conteudo = elemento("areaConteudo");
 
-const conteudo = document.querySelector("#areaConteudo");
-```
-
-
-        const conteudo = document.querySelector(
-            ".main-content, .conteudo-principal, main, .content"
-        );
-
-        if (!navegacao || !conteudo) {
-            console.warn(
-                "Prancheta RH: não foi possível identificar automaticamente " +
-                "o menu e a área principal. Adicione os elementos HTML " +
-                "conforme as instruções abaixo."
-            );
+        if (!conteudo) {
+            console.error("Prancheta RH: área de conteúdo não encontrada.");
             return;
         }
-
-        const botao = document.createElement("button");
-        botao.type = "button";
-        botao.id = "btnAbaFerramentas";
-        botao.className = "menu-item";
-        botao.textContent = "Ferramentas";
-        botao.addEventListener("click", abrirAbaFerramentas);
-
-      ```js
-// Insere FERRAMENTAS imediatamente após os itens de CÁLCULOS
-// e antes do título MATRÍCULA.
-const tituloMatricula = Array.from(
-    navegacao.querySelectorAll(".menu-titulo")
-).find(function (item) {
-    return item.textContent.trim().toUpperCase() === "MATRÍCULA";
-});
-
-if (tituloMatricula) {
-    navegacao.insertBefore(botao, tituloMatricula);
-} else {
-    navegacao.appendChild(botao);
-}
-```
-
 
         const pagina = document.createElement("section");
         pagina.id = "paginaFerramentas";
         pagina.style.display = "none";
+
         pagina.innerHTML = `
             <div class="ferramentas-cabecalho">
-                <h1>Ferramentas</h1>
+                <h2>Ferramentas</h2>
                 <p>Utilitários do Prancheta RH</p>
-            </div>
-
-            <div class="ferramentas-abas">
-                <button type="button" data-ferramenta="calendario">
-                    Calendário
-                </button>
-                <button type="button" data-ferramenta="notas">
-                    Bloco de notas
-                </button>
-                <button type="button" data-ferramenta="calculadora">
-                    Calculadora
-                </button>
             </div>
 
             <div id="ferramentaCalendario" class="ferramenta-painel">
                 <div class="ferramenta-cartao">
                     <div class="calendario-topo">
-                        <button type="button" id="calendarioAnterior"
-                            aria-label="Mês anterior">‹</button>
-                        <h2 id="calendarioTitulo"></h2>
-                        <button type="button" id="calendarioProximo"
-                            aria-label="Próximo mês">›</button>
+                        <button type="button" id="calendarioAnterior">‹</button>
+                        <h3 id="calendarioTitulo"></h3>
+                        <button type="button" id="calendarioProximo">›</button>
                     </div>
+
                     <div id="calendarioGrade" class="calendario-grade"></div>
+
                     <p id="calendarioSelecionado"></p>
+
                     <button type="button" id="calendarioHoje">
                         Ir para hoje
-                    </button>
-                </div>
-            </div>
-
-            <div id="ferramentaNotas" class="ferramenta-painel"
-                style="display:none">
-                <div class="ferramenta-cartao">
-                    <h2>Bloco de notas</h2>
-                    <p>Suas anotações são salvas neste navegador.</p>
-                    <textarea id="ferramentasNotasTexto"
-                        rows="14"
-                        placeholder="Escreva seus lembretes aqui..."
-                        style="width:100%;resize:vertical"></textarea>
-                    <p id="notasStatus" aria-live="polite">
-                        As notas são salvas automaticamente.
-                    </p>
-                    <button type="button" id="limparNotas">
-                        Limpar notas
                     </button>
                 </div>
             </div>
@@ -5347,49 +5272,56 @@ if (tituloMatricula) {
             <div id="ferramentaCalculadora" class="ferramenta-painel"
                 style="display:none">
                 <div class="ferramenta-cartao calculadora-cartao">
-                    <h2>Calculadora</h2>
+                    <h3>Calculadora</h3>
+
                     <input id="calculadoraVisor" type="text"
-                        value="0" readonly aria-label="Resultado"
-                        style="width:100%;text-align:right;font-size:2rem">
+                        value="0" readonly aria-label="Resultado">
+
                     <div class="calculadora-grade">
                         <button type="button" data-calc="limpar">C</button>
                         <button type="button" data-calc="apagar">⌫</button>
-                        <button type="button" data-calc="operador"
-                            data-valor="/">÷</button>
-                        <button type="button" data-calc="operador"
-                            data-valor="*">×</button>
+                        <button type="button" data-calc="operador" data-valor="/">÷</button>
+                        <button type="button" data-calc="operador" data-valor="*">×</button>
 
-                        <button type="button" data-calc="numero"
-                            data-valor="7">7</button>
-                        <button type="button" data-calc="numero"
-                            data-valor="8">8</button>
-                        <button type="button" data-calc="numero"
-                            data-valor="9">9</button>
-                        <button type="button" data-calc="operador"
-                            data-valor="-">−</button>
+                        <button type="button" data-calc="numero" data-valor="7">7</button>
+                        <button type="button" data-calc="numero" data-valor="8">8</button>
+                        <button type="button" data-calc="numero" data-valor="9">9</button>
+                        <button type="button" data-calc="operador" data-valor="-">−</button>
 
-                        <button type="button" data-calc="numero"
-                            data-valor="4">4</button>
-                        <button type="button" data-calc="numero"
-                            data-valor="5">5</button>
-                        <button type="button" data-calc="numero"
-                            data-valor="6">6</button>
-                        <button type="button" data-calc="operador"
-                            data-valor="+">+</button>
+                        <button type="button" data-calc="numero" data-valor="4">4</button>
+                        <button type="button" data-calc="numero" data-valor="5">5</button>
+                        <button type="button" data-calc="numero" data-valor="6">6</button>
+                        <button type="button" data-calc="operador" data-valor="+">+</button>
 
-                        <button type="button" data-calc="numero"
-                            data-valor="1">1</button>
-                        <button type="button" data-calc="numero"
-                            data-valor="2">2</button>
-                        <button type="button" data-calc="numero"
-                            data-valor="3">3</button>
+                        <button type="button" data-calc="numero" data-valor="1">1</button>
+                        <button type="button" data-calc="numero" data-valor="2">2</button>
+                        <button type="button" data-calc="numero" data-valor="3">3</button>
                         <button type="button" data-calc="igual">=</button>
 
                         <button type="button" data-calc="sinal">+/−</button>
-                        <button type="button" data-calc="numero"
-                            data-valor="0">0</button>
+                        <button type="button" data-calc="numero" data-valor="0">0</button>
                         <button type="button" data-calc="decimal">,</button>
                     </div>
+                </div>
+            </div>
+
+            <div id="ferramentaNotas" class="ferramenta-painel"
+                style="display:none">
+                <div class="ferramenta-cartao">
+                    <h3>Bloco de notas</h3>
+                    <p>As anotações são salvas neste navegador.</p>
+
+                    <textarea id="ferramentasNotasTexto"
+                        rows="14"
+                        placeholder="Escreva seus lembretes aqui..."></textarea>
+
+                    <p id="notasStatus" aria-live="polite">
+                        As notas são salvas automaticamente.
+                    </p>
+
+                    <button type="button" id="limparNotas">
+                        Limpar notas
+                    </button>
                 </div>
             </div>
         `;
@@ -5400,62 +5332,80 @@ if (tituloMatricula) {
         configurarCalendario();
         configurarNotas();
         configurarCalculadora();
-        configurarAbasInternas();
         mostrarCalendario();
     }
 
     /* =====================================================
-       NAVEGAÇÃO
+       ABRIR CADA FERRAMENTA PELOS BOTÕES DO MENU
     ===================================================== */
 
-    function abrirAbaFerramentas() {
+    function abrirAbaFerramentas(nome) {
+        criarAbaFerramentas();
+
+        const pagina = elemento("paginaFerramentas");
+        const conteudo = elemento("areaConteudo");
+
+        if (!pagina || !conteudo) return;
+
         /*
-         * Oculta as páginas principais sem apagar seus conteúdos.
-         * A lista é limitada a elementos comuns de navegação.
+         * Oculta o conteúdo principal atual e mostra a área
+         * das ferramentas dentro da mesma área de conteúdo.
          */
-        document.querySelectorAll(
-            "[data-pagina], .pagina, .page, .conteudo-aba"
-        ).forEach(function (pagina) {
-            if (pagina.id !== "paginaFerramentas") {
-                pagina.style.display = "none";
+        Array.from(conteudo.children).forEach(function (item) {
+            if (item.id !== "paginaFerramentas") {
+                item.style.display = "none";
             }
         });
 
-        const pagina = elemento("paginaFerramentas");
-        if (pagina) pagina.style.display = "block";
+        pagina.style.display = "block";
 
-        document.querySelectorAll(
-            "#btnAbaFerramentas"
-        ).forEach(function (botao) {
-            botao.classList.add("ativo");
+        const nomes = {
+            calendario: "ferramentaCalendario",
+            calculadora: "ferramentaCalculadora",
+            notas: "ferramentaNotas"
+        };
+
+        const destino = nomes[nome] || nomes.calendario;
+
+        Object.values(nomes).forEach(function (id) {
+            const painel = elemento(id);
+            if (painel) {
+                painel.style.display = id === destino ? "block" : "none";
+            }
         });
+
+        document.querySelectorAll(".menu-item").forEach(function (botao) {
+            botao.classList.remove("ativo");
+        });
+
+        const idsBotoes = {
+            calendario: "btnFerramentaCalendario",
+            calculadora: "btnFerramentaCalculadora",
+            notas: "btnFerramentaNotas"
+        };
+
+        const botaoAtivo = elemento(idsBotoes[nome]);
+        if (botaoAtivo) {
+            botaoAtivo.classList.add("ativo");
+        }
+
+        const titulos = {
+            calendario: ["Calendário", "Consulte datas e dias do mês."],
+            calculadora: ["Calculadora", "Faça cálculos rápidos."],
+            notas: ["Bloco de notas", "Guarde lembretes neste navegador."]
+        };
+
+        const titulo = elemento("tituloPagina");
+        const subtitulo = elemento("subtituloPagina");
+
+        if (titulo && titulos[nome]) titulo.textContent = titulos[nome][0];
+        if (subtitulo && titulos[nome]) subtitulo.textContent = titulos[nome][1];
     }
 
-    function configurarAbasInternas() {
-        document.querySelectorAll("[data-ferramenta]").forEach(function (botao) {
-            botao.addEventListener("click", function () {
-                const nome = botao.dataset.ferramenta;
-
-                ["calendario", "notas", "calculadora"].forEach(function (item) {
-                    const painel = elemento("ferramenta" +
-                        item.charAt(0).toUpperCase() + item.slice(1));
-
-                    if (painel) {
-                        painel.style.display = item === nome ? "block" : "none";
-                    }
-                });
-
-                document.querySelectorAll("[data-ferramenta]").forEach(
-                    function (outroBotao) {
-                        outroBotao.classList.toggle(
-                            "ativo",
-                            outroBotao === botao
-                        );
-                    }
-                );
-            });
-        });
-    }
+    /*
+     * Disponibiliza a função para os onclick do index.html.
+     */
+    window.abrirAbaFerramentas = abrirAbaFerramentas;
 
     /* =====================================================
        CALENDÁRIO
@@ -5515,6 +5465,7 @@ if (tituloMatricula) {
             celula.textContent = dia;
 
             const hoje = new Date();
+
             if (
                 dia === hoje.getDate() &&
                 mes === hoje.getMonth() &&
@@ -5563,8 +5514,7 @@ if (tituloMatricula) {
                 localStorage.setItem(CHAVE_NOTAS, campo.value);
                 status.textContent = "Notas salvas automaticamente.";
             } catch (erro) {
-                status.textContent =
-                    "Não foi possível salvar. Verifique o armazenamento do navegador.";
+                status.textContent = "Não foi possível salvar as notas.";
             }
         });
 
@@ -5608,110 +5558,130 @@ if (tituloMatricula) {
     }
 
     function configurarCalculadora() {
-        document.querySelectorAll("[data-calc]").forEach(function (botao) {
-            botao.addEventListener("click", function () {
-                const tipo = botao.dataset.calc;
-                const valor = botao.dataset.valor;
+        document.querySelectorAll("#paginaFerramentas [data-calc]")
+            .forEach(function (botao) {
+                botao.addEventListener("click", function () {
+                    const tipo = botao.dataset.calc;
+                    const valor = botao.dataset.valor;
 
-                if (tipo === "limpar") {
-                    limparCalculadora();
-                    return;
-                }
-
-                if (tipo === "numero") {
-                    if (calculadoraNovoNumero || calculadoraVisor === "0") {
-                        calculadoraVisor = valor;
-                        calculadoraNovoNumero = false;
-                    } else {
-                        calculadoraVisor += valor;
-                    }
-                    atualizarVisor();
-                    return;
-                }
-
-                if (tipo === "decimal") {
-                    if (calculadoraNovoNumero) {
-                        calculadoraVisor = "0";
-                        calculadoraNovoNumero = false;
+                    if (tipo === "limpar") {
+                        limparCalculadora();
+                        return;
                     }
 
-                    if (!calculadoraVisor.includes(".")) {
-                        calculadoraVisor += ".";
-                    }
-                    atualizarVisor();
-                    return;
-                }
+                    if (tipo === "numero") {
+                        if (
+                            calculadoraNovoNumero ||
+                            calculadoraVisor === "0" ||
+                            calculadoraVisor === "Erro"
+                        ) {
+                            calculadoraVisor = valor;
+                            calculadoraNovoNumero = false;
+                        } else {
+                            calculadoraVisor += valor;
+                        }
 
-                if (tipo === "sinal") {
-                    if (calculadoraVisor !== "0") {
-                        calculadoraVisor = String(
-                            -Number(calculadoraVisor)
-                        );
                         atualizarVisor();
+                        return;
                     }
-                    return;
-                }
 
-                if (tipo === "apagar") {
-                    calculadoraVisor =
-                        calculadoraVisor.length > 1
-                            ? calculadoraVisor.slice(0, -1)
-                            : "0";
-                    atualizarVisor();
-                    return;
-                }
+                    if (tipo === "decimal") {
+                        if (calculadoraNovoNumero) {
+                            calculadoraVisor = "0";
+                            calculadoraNovoNumero = false;
+                        }
 
-                if (tipo === "operador") {
-                    if (calculadoraOperador && !calculadoraNovoNumero) {
+                        if (!calculadoraVisor.includes(".")) {
+                            calculadoraVisor += ".";
+                        }
+
+                        atualizarVisor();
+                        return;
+                    }
+
+                    if (tipo === "sinal") {
+                        if (calculadoraVisor !== "0" &&
+                            calculadoraVisor !== "Erro") {
+                            calculadoraVisor = String(
+                                -Number(calculadoraVisor)
+                            );
+                            atualizarVisor();
+                        }
+                        return;
+                    }
+
+                    if (tipo === "apagar") {
+                        if (calculadoraVisor === "Erro") {
+                            calculadoraVisor = "0";
+                        } else {
+                            calculadoraVisor =
+                                calculadoraVisor.length > 1
+                                    ? calculadoraVisor.slice(0, -1)
+                                    : "0";
+                        }
+
+                        atualizarVisor();
+                        return;
+                    }
+
+                    if (tipo === "operador") {
+                        if (calculadoraVisor === "Erro") {
+                            limparCalculadora();
+                            return;
+                        }
+
+                        if (calculadoraOperador && !calculadoraNovoNumero) {
+                            const resultado = calcular(
+                                calculadoraAnterior,
+                                Number(calculadoraVisor),
+                                calculadoraOperador
+                            );
+
+                            if (resultado === null ||
+                                !Number.isFinite(resultado)) {
+                                calculadoraVisor = "Erro";
+                                calculadoraAnterior = null;
+                                calculadoraOperador = null;
+                                calculadoraNovoNumero = true;
+                                atualizarVisor();
+                                return;
+                            }
+
+                            calculadoraVisor = String(
+                                Number(resultado.toPrecision(12))
+                            );
+                        }
+
+                        calculadoraAnterior = Number(calculadoraVisor);
+                        calculadoraOperador = valor;
+                        calculadoraNovoNumero = true;
+                        atualizarVisor();
+                        return;
+                    }
+
+                    if (tipo === "igual" && calculadoraOperador) {
                         const resultado = calcular(
                             calculadoraAnterior,
                             Number(calculadoraVisor),
                             calculadoraOperador
                         );
 
-                        if (resultado === null || !Number.isFinite(resultado)) {
+                        if (resultado === null ||
+                            !Number.isFinite(resultado)) {
                             calculadoraVisor = "Erro";
-                            calculadoraAnterior = null;
-                            calculadoraOperador = null;
-                            calculadoraNovoNumero = true;
-                            atualizarVisor();
-                            return;
+                        } else {
+                            calculadoraVisor = String(
+                                Number(resultado.toPrecision(12))
+                            );
                         }
 
-                        calculadoraVisor = String(
-                            Number(resultado.toPrecision(12))
-                        );
+                        calculadoraAnterior = null;
+                        calculadoraOperador = null;
+                        calculadoraNovoNumero = true;
+                        atualizarVisor();
                     }
-
-                    calculadoraAnterior = Number(calculadoraVisor);
-                    calculadoraOperador = valor;
-                    calculadoraNovoNumero = true;
-                    atualizarVisor();
-                    return;
-                }
-
-                if (tipo === "igual" && calculadoraOperador) {
-                    const resultado = calcular(
-                        calculadoraAnterior,
-                        Number(calculadoraVisor),
-                        calculadoraOperador
-                    );
-
-                    if (resultado === null || !Number.isFinite(resultado)) {
-                        calculadoraVisor = "Erro";
-                    } else {
-                        calculadoraVisor = String(
-                            Number(resultado.toPrecision(12))
-                        );
-                    }
-
-                    calculadoraAnterior = null;
-                    calculadoraOperador = null;
-                    calculadoraNovoNumero = true;
-                    atualizarVisor();
-                }
+                });
             });
-        });
 
         atualizarVisor();
     }
@@ -5725,6 +5695,7 @@ if (tituloMatricula) {
 
         const estilo = document.createElement("style");
         estilo.id = "estilosFerramentas";
+
         estilo.textContent = `
             #paginaFerramentas {
                 padding: 24px;
@@ -5735,36 +5706,12 @@ if (tituloMatricula) {
                 margin-bottom: 24px;
             }
 
-            .ferramentas-cabecalho h1 {
+            .ferramentas-cabecalho h2 {
                 margin-bottom: 6px;
             }
 
-            .ferramentas-cabecalho p,
-            #ferramentaNotas p {
+            .ferramentas-cabecalho p {
                 opacity: .75;
-            }
-
-            .ferramentas-abas {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-
-            .ferramentas-abas button,
-            #paginaFerramentas .ferramenta-cartao > button {
-                border: 1px solid #d1d5db;
-                border-radius: 8px;
-                padding: 10px 16px;
-                cursor: pointer;
-                background: var(--cor-ferramentas, #f3f4f6);
-                color: inherit;
-            }
-
-            .ferramentas-abas button.ativo {
-                background: #2563eb;
-                color: white;
-                border-color: #2563eb;
             }
 
             .ferramenta-cartao {
@@ -5772,12 +5719,16 @@ if (tituloMatricula) {
                 padding: 20px;
                 border: 1px solid #d1d5db;
                 border-radius: 12px;
-                background: var(--fundo-ferramentas, #ffffff);
+                background: var(--fundo-ferramentas, #fff);
                 color: inherit;
             }
 
-            .ferramenta-cartao h2 {
+            .ferramenta-cartao h3 {
                 margin: 0 0 16px;
+            }
+
+            .ferramenta-cartao button {
+                cursor: pointer;
             }
 
             .calendario-topo {
@@ -5788,7 +5739,7 @@ if (tituloMatricula) {
                 margin-bottom: 18px;
             }
 
-            .calendario-topo h2 {
+            .calendario-topo h3 {
                 margin: 0;
                 text-transform: capitalize;
                 text-align: center;
@@ -5797,7 +5748,6 @@ if (tituloMatricula) {
             .calendario-topo button {
                 font-size: 24px;
                 padding: 4px 14px;
-                cursor: pointer;
             }
 
             .calendario-grade {
@@ -5819,7 +5769,6 @@ if (tituloMatricula) {
                 border-radius: 7px;
                 background: transparent;
                 color: inherit;
-                cursor: pointer;
             }
 
             .calendario-dia.hoje {
@@ -5829,16 +5778,16 @@ if (tituloMatricula) {
 
             .calendario-dia.selecionado {
                 background: #2563eb;
-                color: white;
-            }
-
-            #calendarioSelecionado {
-                margin: 16px 0;
+                color: #fff;
             }
 
             #ferramentasNotasTexto {
+                display: block;
+                box-sizing: border-box;
+                width: 100%;
                 margin: 14px 0;
                 padding: 12px;
+                resize: vertical;
                 border: 1px solid #d1d5db;
                 border-radius: 8px;
                 font: inherit;
@@ -5848,6 +5797,18 @@ if (tituloMatricula) {
 
             .calculadora-cartao {
                 max-width: 360px;
+            }
+
+            #calculadoraVisor {
+                box-sizing: border-box;
+                width: 100%;
+                padding: 12px;
+                text-align: right;
+                font-size: 2rem;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                background: transparent;
+                color: inherit;
             }
 
             .calculadora-grade {
@@ -5862,14 +5823,8 @@ if (tituloMatricula) {
                 border: 1px solid #d1d5db;
                 border-radius: 8px;
                 font-size: 18px;
-                cursor: pointer;
                 background: var(--cor-ferramentas, #f3f4f6);
                 color: inherit;
-            }
-
-            .calculadora-grade button:hover,
-            .calendario-dia:hover {
-                filter: brightness(.95);
             }
 
             body.tema-escuro #paginaFerramentas .ferramenta-cartao {
@@ -5897,7 +5852,7 @@ if (tituloMatricula) {
     }
 
     /* =====================================================
-       INICIALIZAÇÃO DO MÓDULO
+       INICIALIZAÇÃO
     ===================================================== */
 
     function iniciarFerramentas() {
